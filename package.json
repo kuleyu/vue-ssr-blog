@@ -8,5 +8,8 @@
     "start": "./bin/www"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "github-webhook-handler": "^0.7.1"
+  }
 }
