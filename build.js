@@ -17,7 +17,7 @@ handler.on('push', function (event) {
   console.log('Received a push event for %s to %s',
     event.payload.repository.name,
     event.payload.ref)
-  rumCommand('sh', ['./build.sh'], function( txt ) { // 执行 autoBuild.sh 脚本文件
+  rumCommand('sh', ['./build.sh'], function( txt ) { 
     console.log(txt)
   })
 })
