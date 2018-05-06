@@ -60,3 +60,15 @@ export function fetchCurrentUser() {
 export function addArticle(data) {
   return api.addArticle(data)
 }
+
+export function signUp() {
+  return api.signUp()
+}
+
+export function login(name, pwd) {
+  return api.login(name, pwd)
+}
+
+export function logout() {
+  return api.logout()
+}

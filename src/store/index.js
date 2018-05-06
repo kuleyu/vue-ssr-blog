@@ -1,9 +1,10 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import {
-  addArticle
-} from '../api'
 import index from './modules/index'
+import {
+  addArticle,
+  signUp,
+} from '../api'
 
 Vue.use(Vuex)
 
@@ -20,8 +21,11 @@ export function createStore() {
     },
 
     actions: {
-      'ADD_ARTICLE': (context, data) => {
-          return addArticle(data)
+      ADD_ARTICLE: (context, data) => {
+        return addArticle(data)
+      },
+      SIGN_UP: () => {
+        return signUp()
       }
     },
 

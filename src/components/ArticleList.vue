@@ -6,8 +6,9 @@
       :key="i"
     >
       <div class="fr color-c999">
-        <span class="ib-middle">{{ item.createdAt }}</span>
-        <i class="iconfont icon-zan ib-middle px-margin-l10"></i>
+        <i class="iconfont icon-shijian ib-middle" />
+        <span class="ib-middle">{{ item.createdAt | format }}</span>
+        <i class="iconfont icon-zan ib-middle px-margin-l10" />
         <span class="ib-middle">20</span>
       </div>
       <router-link
@@ -24,8 +25,16 @@
 </template>
 
 <script>
+  import { format } from '../assets/date'
+
   export default {
     name: 'ArticleList',
+
+    filters: {
+      format(str) {
+        return format(str, 'yy/MM/dd')
+      }
+    },
 
     props: {
       list: {

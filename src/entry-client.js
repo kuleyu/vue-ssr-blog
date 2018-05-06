@@ -1,9 +1,10 @@
 import Vue from 'vue'
 import { createApp } from './app'
 const { app, router, store } = createApp()
-import { Message } from 'element-ui'
+import { Message, MessageBox } from 'element-ui'
 
 Vue.prototype.$message = Message
+Vue.prototype.$box = MessageBox
 
 if (window.__INITIAL_STATE__) {
   store.replaceState(window.__INITIAL_STATE__)
