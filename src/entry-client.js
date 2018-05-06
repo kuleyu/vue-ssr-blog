@@ -1,18 +1,23 @@
+import Vue from 'vue'
 import { createApp } from './app'
 const { app, router, store } = createApp()
+import { Message } from 'element-ui'
+
+Vue.prototype.$message = Message
 
 if (window.__INITIAL_STATE__) {
   store.replaceState(window.__INITIAL_STATE__)
 }
 
 router.onReady(() => {
-  console.log(router)
+  // 当第一次加载完成后
+  // 页面内发生路由变化时，会触发路由钩子函数
   router.beforeResolve((to, from, next) => {
-    console.log(to, from)
     const matched = router.getMatchedComponents(to)
     const prevMatched = router.getMatchedComponents(from)
-    // 我们只关心之前没有渲染的组件
-    // 所以我们对比它们，找出两个匹配列表的差异组件
+    console.log(matched, prevMatched)
+    // 从即将跳转的页面所涉及到的组件中
+    // 筛选出未取数据的组件
     let diffed = false
     const activated = matched.filter((c, i) => {
       return diffed || (diffed = (prevMatched[i] !== c))

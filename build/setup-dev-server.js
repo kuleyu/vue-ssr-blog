@@ -3,8 +3,9 @@ const path = require('path')
 const MFS = require('memory-fs')
 const webpack = require('webpack')
 const chokidar = require('chokidar')
-const clientConfig = require('./client.config')
+const clientConfig = require('./client.dev.config')
 const serverConfig = require('./server.config')
+const logger = require('../deploy/log').logger('dev')
 
 const readFile = (fs, file) => {
   try {
@@ -13,6 +14,7 @@ const readFile = (fs, file) => {
 }
 
 module.exports = function setupDevServer(app, templatePath, cb) {
+  logger('in')
   let bundle
   let template
   let clientManifest
@@ -47,6 +49,7 @@ module.exports = function setupDevServer(app, templatePath, cb) {
 
   // dev middleware
   const clientCompiler = webpack(clientConfig)
+  // console.log(clientCompiler)
   const devMiddleware = require('webpack-dev-middleware')(clientCompiler, {
     publicPath: clientConfig.output.publicPath,
     noInfo: true

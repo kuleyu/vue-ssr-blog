@@ -2,4 +2,6 @@
 git reset --hard origin/master
 git clean -f
 git pull
-npm start
+pm2 stop server
+npm run start
+# npm run www
