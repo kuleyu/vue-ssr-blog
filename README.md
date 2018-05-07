@@ -6,3 +6,4 @@ vue服务端渲染
 - markdown编辑器
 - Date处理函数
 - element-ui使用
+- [vue-meta](https://github.com/declandewet/vue-meta)
