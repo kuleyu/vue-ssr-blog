@@ -29,7 +29,17 @@ export function createRouter() {
       },
       {
         path: '/editor',
-        component: r => require.ensure([], () => r(require('../views/Editor.vue')), 'Editor')
+        component: r => require.ensure([], () => r(require('../views/Editor.vue')), 'Editor'),
+        children: [
+          {
+            path: ':id',
+            component: r => require.ensure([], () => r(require('../views/Editor.vue')), 'Editor'),
+          }
+        ]
+      },
+      {
+        path: '/detail/:id',
+        component: r => require.ensure([], () => r(require('../views/Detail.vue')), 'Detail')
       }
     ]
   })

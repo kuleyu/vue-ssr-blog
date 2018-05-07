@@ -24,7 +24,6 @@ function fetch(key, condition, payload, field) {
 
       case 'Article': {
         const instance = new AV.Query(key)
-        // console.log(field)
         if (field && field.length) {
           instance.select(field)
         }
@@ -33,16 +32,20 @@ function fetch(key, condition, payload, field) {
             instance.equalTo(key, condition[key])
           })
         }
-        instance.descending('createdAt')
+        // instance.descending('createdAt')
+        instance.descending('updatedAt')
         if (payload) {
           Object.keys(payload).forEach(key => {
             instance[key] = payload[key]
           })
         }
-        return instance.find().then(res => {
-          resolve(res)
-        })
+        return instance.find().then(resolve)
       }
+
+      case 'Detail': {
+        return new AV.Query(condition).get(payload).then(resolve)
+      }
+
       default:
         resolve()
     }
@@ -51,6 +54,10 @@ function fetch(key, condition, payload, field) {
 
 export function fetchIndexList(limit, field) {
   return fetch('Article', null, { limit }, field)
+}
+
+export function fetchDetail(id) {
+  return fetch('Detail', 'Article', id, ['img', 'inputCompiled', 'tag', 'title', 'vantNum'])
 }
 
 export function getCurrentUser() {

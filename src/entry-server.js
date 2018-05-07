@@ -3,6 +3,7 @@ import { createApp } from './app'
 export default context => {
   return new Promise((resolve, reject) => {
     const { app, router, store } = createApp()
+
     // 路由跳转
     router.push(context.url)
 
@@ -26,6 +27,7 @@ export default context => {
         // context.state 将作为 window.__INITIAL_STATE__ 状态
         // 自动嵌入到最终的 HTML 中。
         context.state = store.state
+        context.meta = app.$meta()
         resolve(app)
       })
     }, reject)

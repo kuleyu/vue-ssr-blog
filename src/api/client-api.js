@@ -6,7 +6,7 @@ export default function () {
   db.init()
 
   db.addArticle = data => {
-    const article = db.initTables('Article')
+    const article = db.initTables('Article', data.id)
     Object.keys(data).forEach(key => {
       if (key !== 'id') {
         article.set(key, data[key])

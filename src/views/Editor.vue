@@ -26,19 +26,20 @@
         v-model="tag"
         class="editor__tag px-line-30 px-font-16 px-margin-l10 ib-middle"
         type="text"
-        placeholder="请输入标签"
+        placeholder="请输入标签，顿号分隔"
       >
     </div>
     <textarea
-      class="editor__wrap editor__style height-100 position-a px-top-60 left-0 width-50 bd-gray-lighter-r"
+      class="editor__wrap editor__textarea position-a px-top-60 bottom-0 left-0 width-50 bd-gray-lighter-r"
       :value="input"
       @input="update"
       @keydown.9.prevent="tab"
     />
     <div
-      class="editor__compile-html editor__style position-a px-top-60 right-0 width-50 height-100"
-      v-html="compileValue"
-    />
+      class="editor__compile-html position-a px-top-60 bottom-0 right-0 width-50 overflow-a"
+    >
+      <article-content :content="compileValue" />
+    </div>
   </div>
 </template>
 
@@ -46,7 +47,8 @@
   import marked from 'marked'
   import { debounce } from 'underscore'
   import { Button } from 'element-ui'
-  import { mapActions } from 'vuex'
+  import { mapActions, mapState } from 'vuex'
+  import ArticleContent from '../components/ArticleContent.vue'
   // import Cache from 'web-storage-cache'
 
   // const cache = new Cache()
@@ -54,15 +56,35 @@
   export default {
     name: 'Editor',
 
+    // asyncData({ store, route }) {
+    //   if (route.params.id) {
+    //     //
+    //     console.log(store.state.detail.detail)
+    //   }
+    // },
+
+    metaInfo() {
+      return {
+        title: this.editId ? '编辑文章' : '写文章'
+      }
+    },
+
     components: {
-      ElButton: Button
+      ElButton: Button,
+      ArticleContent
     },
 
     computed: {
+      ...mapState('detail', ['detail']),
+
       compileValue() {
         return marked(this.input, {
           sanitize: true
         })
+      },
+
+      editId() {
+        return this.$route.params.id
       }
     },
 
@@ -71,8 +93,18 @@
         input: '# hello',
         title: '',
         tag: '',
-        img: '',
-        vantNum: 0
+        img: ''
+      }
+    },
+
+    created() {
+      if (this.editId) {
+        if (this.detail) {
+          this.fillDetail()
+        } else {
+          this.$message.info('当前文章详情为空')
+          history.back()
+        }
       }
     },
 
@@ -90,10 +122,11 @@
       submit() {
         // validator
         const data = this.getValue()
-        this.ADD_ARTICLE(data).then(res => {
-          if (res.objectId) {
-            Message.success(`${data.id ? '编辑' : '添加'}成功`)
-          }
+        if (this.editId) {
+          data.id = this.editId
+        }
+        this.ADD_ARTICLE(data).then(() => {
+          this.$message.success(`${data.id ? '编辑' : '添加'}成功`)
         })
       },
 
@@ -103,21 +136,26 @@
           inputCompiled: this.compileValue,
           title: this.title,
           tag: this.tag,
-          img: this.img,
-          vantNum: 0
+          img: this.img
         }
       },
 
       saveDraft() {
-        // cache.set('draft', this.getValue())
         this.$message.success('保存草稿成功')
+      },
+
+      fillDetail() {
+        const { title, tag, input } = this.detail
+        this.title = title
+        this.tag = tag
+        this.input = input
       }
     }
   }
 </script>
 
 <style lang="scss">
-  .editor__style {
+  .editor__textarea {
     font-size: 16px;
     line-height: 1.5;
     word-wrap: break-word;
@@ -138,19 +176,5 @@
   .editor__tag {
     width: 200px;
     border: none;
-  }
-  .editor__compile-html {
-    padding: 10px;
-    overflow: auto;
-
-    pre {
-      padding: 16px;
-      overflow: auto;
-      line-height: 1.45;
-      background-color: #f6f8fa;
-      border-radius: 3px;
-      font-family: "SFMono-Regular",Consolas,"Liberation Mono",Menlo,Courier,monospace;
-      font-size: 12px;
-    }
   }
 </style>

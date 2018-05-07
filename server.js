@@ -78,7 +78,6 @@ function render(req, res) {
 
   const now = Date.now()
   const context = {
-    title: 'jmingzi',
     url: req.url
   }
 

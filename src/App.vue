@@ -4,6 +4,16 @@
   </div>
 </template>
 
+<script>
+  export default {
+    name: 'App',
+
+    metaInfo: {
+      titleTemplate: '%s - Jmingzi',
+    }
+  }
+</script>
+
 <style lang="scss">
   html, body, #app {
     height: 100%;

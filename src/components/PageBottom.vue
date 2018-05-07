@@ -1,5 +1,11 @@
 <template>
-  <div class="page-bottom__menu position-a width-100 px-bottom-20 text-center">
+  <div
+    class="page-bottom__menu width-100 text-center"
+    :class="{
+      'position-a': isFixed,
+      'px-bottom-20': isFixed
+    }"
+  >
     <div class="px-margin-b10">
       <template v-if="currentUser">
         <router-link to="/editor">
@@ -120,6 +126,13 @@
             path: '/about'
           }
         ]
+      }
+    },
+
+    props: {
+      isFixed: {
+        type: Boolean,
+        default: true
       }
     },
 

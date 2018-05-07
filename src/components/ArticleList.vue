@@ -6,13 +6,13 @@
       :key="i"
     >
       <div class="fr color-c999">
-        <i class="iconfont icon-shijian ib-middle" />
-        <span class="ib-middle">{{ item.createdAt | format }}</span>
-        <i class="iconfont icon-zan ib-middle px-margin-l10" />
-        <span class="ib-middle">20</span>
+        <!--<i class="iconfont icon-shijian ib-middle" />-->
+        <span class="ib-middle">{{ item.updatedAt | format }}</span>
+        <!--<i class="iconfont icon-zan ib-middle px-margin-l10" />-->
+        <!--<span class="ib-middle">{{ item.vantNum }}</span>-->
       </div>
       <router-link
-        to="/"
+        :to="`/detail/${item.id}`"
         class="px-font-14"
       >
         <span>{{ item.title || '标题' }}</span>
@@ -25,14 +25,18 @@
 </template>
 
 <script>
-  import { format } from '../assets/date'
+  import { ago } from '../assets/date'
 
   export default {
     name: 'ArticleList',
 
     filters: {
       format(str) {
-        return format(str, 'yy/MM/dd')
+        let res
+        Date.prototype.ago = ago
+        res = new Date().ago(str)
+        Date.prototype.ago = null
+        return res
       }
     },
 

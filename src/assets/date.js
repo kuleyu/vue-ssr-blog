@@ -1,3 +1,4 @@
+// https://github.com/jaywcjlove/date.js
 /**
  * [format 日期格式化]
  * @param  {[type]} format ["YYYY年MM月dd日hh小时mm分ss秒"]

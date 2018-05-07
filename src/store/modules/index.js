@@ -28,7 +28,11 @@ export default {
   actions: {
     FETCH_LIST({ commit }, { limit, field }) {
       return fetchIndexList(limit, field).then(res => {
-        commit('SET_LIST', res)
+        commit('SET_LIST', res.map(item => ({
+          id: item.id,
+          updatedAt: item.updatedAt,
+          ...item.attributes
+        })))
       })
     }
   }

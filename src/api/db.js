@@ -16,7 +16,10 @@ export default {
     this.AV = AV
   },
 
-  initTables(tableName) {
+  initTables(tableName, createWithoutDataId) {
+    if (createWithoutDataId) {
+      return AV.Object.createWithoutData(tableName, createWithoutDataId)
+    }
     if (this[tableName]) {
       return new this[tableName]()
     }

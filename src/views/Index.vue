@@ -25,6 +25,14 @@
   export default {
     name: 'Index',
 
+    metaInfo: {
+      title: '首页',
+      meta: [
+        { vmid: 'keywords', name: 'keywords', content: 'jmingzi' },
+        { vmid: 'description', name: 'description', content: 'jmingzi' }
+      ]
+    },
+
     asyncData({ store }) {
       return store.dispatch('index/FETCH_LIST', { limit: 5, field: ['title', 'vantNum'] })
     },

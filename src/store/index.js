@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import index from './modules/index'
+import detail from './modules/detail'
 import {
   addArticle,
   signUp,
@@ -19,6 +20,10 @@ export function createStore() {
       index: {
         namespaced: true,
         ...index
+      },
+      detail: {
+        namespaced: true,
+        ...detail
       }
     },
 
