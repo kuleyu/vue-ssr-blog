@@ -1,9 +1,21 @@
 <template>
   <div class="page-bottom__menu position-a width-100 px-bottom-20 text-center">
     <div class="px-margin-b10">
-      <a href="javascript:" @click="showSignIn = true">
-        <span class="ib-middle">登录</span>
-      </a>
+      <template v-if="currentUser">
+        <router-link to="/editor">
+          <span class="ib-middle">写文章</span>
+        </router-link>
+        <router-link to="/plan" class="px-margin-l10">
+          <span class="ib-middle">写计划</span>
+        </router-link>
+        <a href="javascript:" class="px-margin-l10" @click="showSignIn = true">
+          <span class="ib-middle">系统设置</span>
+        </a>
+        <a href="javascript:" class="px-margin-l10" @click="logOut">
+          <span class="ib-middle">注销</span>
+        </a>
+      </template>
+
       <a href="javascript:" class="px-margin-l10 display-n" @click="signUp">
         <span class="ib-middle">注册</span>
       </a>
@@ -16,8 +28,11 @@
       >
         <router-link :to="item.path">{{ item.name }}</router-link>
       </li>
+      <li class="ib-middle px-font-14 px-width-50" v-if="!currentUser">
+        <a href="javascript:" @click="showSignIn = true">登录</a>
+      </li>
     </ul>
-    <p class="color-c999 px-margin-t10 px-font-12">最后更新：2018-02-09</p>
+    <p class="color-c999 px-margin-t10 px-font-12">最后更新：{{ lastModifier }}</p>
 
     <el-dialog
       title="登录"
@@ -51,11 +66,13 @@
 </template>
 
 <script>
-  import { mapActions } from 'vuex'
+  import { mapActions, mapState, mapGetters } from 'vuex'
   import { Dialog, Button, Form, FormItem, Input } from 'element-ui'
-  import { login } from '../api'
+  import { login, logout } from '../api'
 
   export default {
+    name: 'PageBottom',
+
     components: {
       ElDialog: Dialog,
       ElButton: Button,
@@ -106,8 +123,17 @@
       }
     },
 
+    computed: {
+      ...mapState(['currentUser']),
+      ...mapGetters('index', ['lastModifier'])
+    },
+
+    created() {
+      this.CURRENT_USER()
+    },
+
     methods: {
-      ...mapActions(['SIGN_UP']),
+      ...mapActions(['SIGN_UP', 'CURRENT_USER']),
 
       signUp() {
         this.$box.confirm('该接口为后门').then(() => {
@@ -122,6 +148,7 @@
               .then(res => {
                 if (res) {
                   this.$message.success('登录成功')
+                  this.CURRENT_USER()
                   this.showSignIn = false
                 }
               })
@@ -130,7 +157,13 @@
               })
           }
         })
+      },
 
+      logOut() {
+        logout().then(() => {
+          this.CURRENT_USER()
+          this.$message.success('注销成功')
+        })
       }
     }
   }

@@ -9,7 +9,7 @@ export default context => {
     router.onReady(() => {
       // 返回目标位置或是当前路由匹配的组件数组
       const matchedComponents = router.getMatchedComponents()
-
+      // console.log(matchedComponents)
       if (!matchedComponents.length) {
         return reject({ code: 404, path: context.url })
       }

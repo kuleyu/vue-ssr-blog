@@ -24,7 +24,7 @@ function fetch(key, condition, payload, field) {
 
       case 'Article': {
         const instance = new AV.Query(key)
-        console.log(field)
+        // console.log(field)
         if (field && field.length) {
           instance.select(field)
         }
@@ -53,7 +53,7 @@ export function fetchIndexList(limit, field) {
   return fetch('Article', null, { limit }, field)
 }
 
-export function fetchCurrentUser() {
+export function getCurrentUser() {
   return fetch('currentUser')
 }
 

@@ -16,7 +16,7 @@ router.onReady(() => {
   router.beforeResolve((to, from, next) => {
     const matched = router.getMatchedComponents(to)
     const prevMatched = router.getMatchedComponents(from)
-    console.log(matched, prevMatched)
+    // console.log(matched, prevMatched)
     // 从即将跳转的页面所涉及到的组件中
     // 筛选出未取数据的组件
     let diffed = false

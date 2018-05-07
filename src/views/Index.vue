@@ -25,6 +25,10 @@
   export default {
     name: 'Index',
 
+    asyncData({ store }) {
+      return store.dispatch('index/FETCH_LIST', { limit: 5, field: ['title', 'vantNum'] })
+    },
+
     components: {
       ArticleList,
       PageBottom
@@ -33,10 +37,6 @@
     data() {
       return {
       }
-    },
-
-    asyncData({ store }) {
-      return store.dispatch('index/FETCH_LIST', { limit: 5, field: ['title', 'vantNum'] })
     },
 
     computed: {
