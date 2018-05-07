@@ -1,4 +1,5 @@
-#! /bin/bash
+#!/usr/bin/env sh
+set -e
 echo 'git pull ...'
 # git reset --hard origin/master
 # git clean -f
