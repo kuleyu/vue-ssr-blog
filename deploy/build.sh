@@ -1,4 +1,5 @@
 #! /bin/bash
+echo 'git pull ...'
 git reset --hard origin/master
 git clean -f
 git pull
