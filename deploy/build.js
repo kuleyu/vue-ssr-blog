@@ -1,31 +1,50 @@
-var http = require('http')
-var spawn = require('child_process').spawn
-var createHandler = require('github-webhook-handler')
-var handler = createHandler({ path: '/pushCode', secret: 'auto-build-blog' }) // 在代码仓库的 Webhooks 选项处配置
-http.createServer(function (req, res) {
-  handler(req, res, function (err) {
-    res.statusCode = 404;
-    res.end('no such location')
+const express = require('express')
+const spawn = require('child_process').spawn
+const createHandler = require('github-webhook-handler')
+const handler = createHandler({ path: '/pushCode', secret: 'auto-build-blog' })
+const app = express()
+const logger = require('./log').logger
+const myLocalIp = require('my-local-ip')
+
+app.all('*', (req, res) => {
+  handler(req, res, () => {
+    if (req.method === 'POST') {
+      logger('debug')('receive post')
+    } else {
+      res.statusCode = 404
+      res.end(`not support ${req.method} methods!`)
+    }
   })
-}).listen(8083)
+})
+
+app.listen(8083, function() {
+  logger('debug')(`server is start at ${myLocalIp()}:8083!`)
+})
 
 handler.on('error', function (err) {
-  console.error('Error:', err.message)
+  logger('error')('Error:', err.message)
 })
 
-// 监听 push 事件
-handler.on('push', function (event) {
-  console.log('Received a push event for %s to %s',
-    event.payload.repository.name,
-    event.payload.ref)
-  rumCommand('sh', ['./build.sh'], function( txt ) { // 执行 autoBuild.sh 脚本文件
-    console.log(txt)
+handler.on('push', (event) => {
+  logger()('Received a push event for %s to %s', event.payload.repository.name, event.payload.ref)
+  rumCommand('sh', ['./deploy/build.sh'], txt => {
+    logger()(txt)
   })
 })
 
-function rumCommand( cmd, args, callback ) {
-  var child = spawn( cmd, args )
-  var response = ''
-  child.stdout.on('data', function( buffer ){ response += buffer.toString(); })
-  child.stdout.on('end', function(){ callback( response ) })
+function rumCommand(cmd, args, callback) {
+  let response = ''
+  const child = spawn(cmd, args)
+
+  child.stdout.on('data', buffer => {
+    response += buffer.toString()
+  })
+
+  child.stderr.on('data', (data) => {
+    logger('error')(`stderr: ${data}`)
+  })
+
+  child.stdout.on('end', () => {
+    callback(response)
+  })
 }
