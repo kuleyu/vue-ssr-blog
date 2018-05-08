@@ -48,7 +48,8 @@
   import { debounce } from 'underscore'
   import { Button } from 'element-ui'
   import { mapActions, mapState } from 'vuex'
-  import ArticleContent from '../components/ArticleContent.vue'
+  // import ArticleContent from '../components/ArticleContent.vue'
+  const ArticleContent = () => import('../components/ArticleContent.vue')
 
   export default {
     name: 'Editor',

@@ -19,8 +19,11 @@
 
 <script>
   import { mapState } from 'vuex'
-  import ArticleList from '../components/ArticleList.vue'
-  import PageBottom from '../components/PageBottom.vue'
+
+  const ArticleList = () => import('../components/ArticleList.vue')
+  const PageBottom = () => import('../components/PageBottom.vue')
+  // import ArticleList from '../components/ArticleList.vue'
+  // import PageBottom from '../components/PageBottom.vue'
 
   export default {
     name: 'Index',
@@ -28,8 +31,9 @@
     metaInfo: {
       title: '首页',
       meta: [
-        { vmid: 'keywords', name: 'keywords', content: 'jmingzi' },
-        { vmid: 'description', name: 'description', content: 'jmingzi' }
+        { vmid: 'keywords', name: 'keywords', content: 'jmingzi，nodejs，h5学习，小程序学习，pwa学习，前端学习，前端开发' },
+        { vmid: 'description', name: 'description', content: '爱学习，爱生活，爱前端' },
+        { name: 'author', content: 'jmingzi' }
       ]
     },
 

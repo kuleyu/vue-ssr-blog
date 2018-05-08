@@ -37,9 +37,11 @@
 
 <script>
   import { mapState } from 'vuex'
-  import ArticleContent from '../components/ArticleContent.vue'
-  import PageBottom from '../components/PageBottom.vue'
+  // import ArticleContent from '../components/ArticleContent.vue'
+  // import PageBottom from '../components/PageBottom.vue'
   import { ago } from '../assets/date'
+  const PageBottom = () => import('../components/PageBottom.vue')
+  const ArticleContent = () => import('../components/ArticleContent.vue')
 
   export default {
     name: 'Detail',
