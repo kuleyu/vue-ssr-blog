@@ -8,3 +8,4 @@ vue服务端渲染
 - element-ui使用
 - [vue-meta](https://github.com/declandewet/vue-meta)
 - nvm管理node版本
+- [阿里云域名升级https](https://blog.csdn.net/cslucifer/article/details/79077831)
