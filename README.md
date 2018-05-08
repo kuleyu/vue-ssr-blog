@@ -7,3 +7,4 @@ vue服务端渲染
 - Date处理函数
 - element-ui使用
 - [vue-meta](https://github.com/declandewet/vue-meta)
+- nvm管理node版本
