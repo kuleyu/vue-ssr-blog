@@ -18,7 +18,7 @@ handler.on('push', function (event) {
   console.log('Received a push event for %s to %s',
     event.payload.repository.name,
     event.payload.ref)
-  rumCommand('sh', ['./build.sh'], function( txt ) { // 执行 autoBuild.sh 脚本文件
+  rumCommand('sh', ['./deploy/build.sh'], function( txt ) { // 执行 autoBuild.sh 脚本文件
     console.log(txt)
   })
 })
@@ -27,5 +27,10 @@ function rumCommand( cmd, args, callback ) {
   var child = spawn( cmd, args )
   var response = ''
   child.stdout.on('data', function( buffer ){ response += buffer.toString(); })
+  
+  child.stderr.on('data', (data) => {
+ 	 console.log(`stderr: ${data}`);
+	})
+
   child.stdout.on('end', function(){ callback( response ) })
 }
