@@ -14,10 +14,10 @@ npm run build
 echo 'npm run start ...'
 pm2 restart server
 
-echo 'commit build files ...'
-git add .
-git commit -m 'commit by server shell for build restart'
-git push
+# echo 'commit build files ...'
+# git add .
+# git commit -m 'commit by server shell for build restart'
+# git push
 
 echo 'push complete ...'
 # npm run www
