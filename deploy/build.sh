@@ -12,7 +12,7 @@ echo 'npm run build ...'
 npm run build
 
 echo 'npm run start ...'
-npm run start
+npm start
 
 echo 'commit build files ...'
 git add .
