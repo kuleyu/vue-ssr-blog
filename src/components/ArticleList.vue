@@ -10,12 +10,19 @@
         <span class="ib-middle">{{ item.updatedAt | format }}</span>
         <!--<i class="iconfont icon-zan ib-middle px-margin-l10" />-->
         <!--<span class="ib-middle">{{ item.vantNum }}</span>-->
+        <span
+          v-if="currentUser"
+          class="color-error ib-middle px-margin-l10 cursor-p"
+          @click="del(item, i)"
+        >
+          删除
+        </span>
       </div>
       <router-link
         :to="`/detail/${item.id}`"
         class="px-font-14"
       >
-        <span>{{ item.title || '标题' }}</span>
+        <span>{{ item.title }}</span>
       </router-link>
     </li>
     <li class="px-line-40 px-padding-lr15 cl text-center hover cursor-p">
@@ -25,6 +32,7 @@
 </template>
 
 <script>
+  import { mapState, mapActions } from 'vuex'
   import { ago } from '../assets/date'
 
   export default {
@@ -46,6 +54,20 @@
         default() {
           return []
         }
+      }
+    },
+
+    computed: {
+      ...mapState(['currentUser'])
+    },
+
+    methods: {
+      ...mapActions('article', ['DEL_ARTICLE']),
+
+      del(item, i) {
+        this.$box.confirm('确认要删除吗？')
+          .then(() => this.DEL_ARTICLE({ id: item.id, index: i }))
+          .then(() => { this.$message.success('删除成功') })
       }
     }
   }

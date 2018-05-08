@@ -45,7 +45,7 @@
     name: 'Detail',
 
     asyncData({ store, route }) {
-      return store.dispatch('detail/FETCH_DETAIL', route.params.id)
+      return store.dispatch('article/FETCH_DETAIL', route.params.id)
     },
 
     metaInfo() {
@@ -75,7 +75,7 @@
     },
 
     computed: {
-      ...mapState('detail', ['detail']),
+      ...mapState('article', ['detail']),
       ...mapState(['currentUser']),
 
       tag() {

@@ -1,7 +1,7 @@
 import createApi from 'api'
 
 const api = createApi()
-const { AV, cache } = api
+const { AV, cache, logger, onServer } = api
 
 // 查询接口封装
 // @params key {String} 查询的表名
@@ -9,73 +9,69 @@ const { AV, cache } = api
 // @params payload {Object}
 // @params field {Array} 查询指定字段
 // @returns
-function fetch(key, condition, payload, field) {
-  if (cache && cache.has(key)) {
-    return Promise.resolve(cache.get(key))
-  }
-
-  return new Promise((resolve, reject) => {
-    let res
-    switch (key) {
-      case 'currentUser': {
-        res = AV.User.current()
-        resolve(res)
-      } break
-
-      case 'Article': {
-        const instance = new AV.Query(key)
-        if (field && field.length) {
-          instance.select(field)
-        }
-        if (condition) {
-          Object.keys(condition).forEach(key => {
-            instance.equalTo(key, condition[key])
-          })
-        }
-        // instance.descending('createdAt')
-        instance.descending('updatedAt')
-        if (payload) {
-          Object.keys(payload).forEach(key => {
-            instance[key] = payload[key]
-          })
-        }
-        return instance.find().then(resolve)
-      }
-
-      case 'Detail': {
-        return new AV.Query(condition).get(payload).then(resolve)
-      }
-
-      default:
-        resolve()
+export function fetch(key, condition, payload, field) {
+  let cacheKey
+  switch (key) {
+    case 'currentUser': {
+      return Promise.resolve(AV.User.current())
     }
-  })
+
+    case 'Article': {
+      cacheKey = `article-${payload ? payload.limit : 0}`
+      if (cache && cacheKey) {
+        const cacheValue = cache.get(cacheKey)
+        if (cacheValue) {
+          console.log(`http: get article list from cache, key: ${cacheKey}`)
+          return Promise.resolve(cacheValue)
+        }
+      }
+
+      const instance = new AV.Query(key)
+      if (field && field.length) {
+        instance.select(field)
+      }
+      if (condition) {
+        Object.keys(condition).forEach(key => {
+          instance.equalTo(key, condition[key])
+        })
+      }
+      instance.descending('updatedAt')
+      if (payload) {
+        Object.keys(payload).forEach(key => {
+          instance[key] = payload[key]
+        })
+      }
+      return instance.find().then(res => {
+        cache && cache.set(cacheKey, res)
+        return res
+      })
+    }
+
+    case 'Detail': {
+      cacheKey = `detail-${payload}`
+      if (cache && cacheKey) {
+        const cacheValue = cache.get(cacheKey)
+        if (cacheValue) {
+          console.log(`http: get article detail from cache, key: ${cacheKey}`)
+          return Promise.resolve(cacheValue)
+        }
+      }
+
+      return new AV.Query(condition)
+        .get(payload)
+        .then(res => {
+          cache && cache.set(cacheKey, res)
+          return res
+        })
+    }
+
+    default:
+      return Promise.resolve()
+  }
 }
 
-export function fetchIndexList(limit, field) {
-  return fetch('Article', null, { limit }, field)
-}
-
-export function fetchDetail(id) {
-  return fetch('Detail', 'Article', id, ['img', 'inputCompiled', 'tag', 'title', 'vantNum'])
-}
-
-export function getCurrentUser() {
-  return fetch('currentUser')
-}
-
-export function addArticle(data) {
-  return api.addArticle(data)
-}
-
-export function signUp() {
-  return api.signUp()
-}
-
-export function login(name, pwd) {
-  return api.login(name, pwd)
-}
-
-export function logout() {
-  return api.logout()
-}
+export const addArticle = api.addArticle
+export const delArticle = api.delArticle
+export const signUp = api.signUp
+export const login = api.login
+export const logout = api.logout

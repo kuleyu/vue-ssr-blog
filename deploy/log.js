@@ -1,9 +1,37 @@
-const log4js = require('log4js')
-const logger = log4js.getLogger()
+const winston = require('winston')
+const { createLogger, format, transports } = winston
+const logger = createLogger({
+  level: 'info',
+  format: format.combine(
+    format.timestamp(),
+    format.simple(),
+    format.prettyPrint()
+  ),
+  transports: [
+    //
+    // - Write to all logs with level `info` and below to `combined.log`
+    // - Write all logs error (and below) to `error.log`.
+    //
+    new transports.Console({
+      format: format.combine(
+        format.timestamp(),
+        format.colorize({ all: true }),
+        format.simple()
+      )
+    }),
+    // new winston.transports.File({ filename: 'error.log', level: 'error' }),
+    // new winston.transports.File({ filename: 'combined.log' })
+  ]
+})
 
-module.exports = {
-  logger(type = 'debug') {
-    logger.level = type
-    return logger.debug.bind(logger)
-  }
-}
+//
+// If we're not in production then log to the `console` with the format:
+// `${info.level}: ${info.message} JSON.stringify({ ...rest }) `
+//
+// if (process.env.NODE_ENV !== 'production') {
+//   logger.add(new winston.transports.Console({
+//     format: winston.format.simple()
+//   }))
+// }
+
+module.exports = logger

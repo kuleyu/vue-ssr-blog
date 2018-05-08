@@ -24,10 +24,6 @@ export function createRouter() {
         component: r => require.ensure([], () => r(require('../views/About.vue')), 'About')
       },
       {
-        path: '/login',
-        component: r => require.ensure([], () => r(require('../views/Login.vue')), 'Login')
-      },
-      {
         path: '/editor',
         component: r => require.ensure([], () => r(require('../views/Editor.vue')), 'Editor'),
         children: [

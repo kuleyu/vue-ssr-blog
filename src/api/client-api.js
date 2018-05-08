@@ -1,7 +1,7 @@
 import db from './db.js'
 
 export default function () {
-  console.log('client api')
+  console.log('http: client api')
 
   db.init()
 
@@ -13,6 +13,11 @@ export default function () {
       }
     })
     return article.save()
+  }
+
+  db.delArticle = data => {
+    const article = db.initTables('Article', data.id)
+    return article.destroy()
   }
 
   return db

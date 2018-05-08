@@ -138,7 +138,7 @@
 
     computed: {
       ...mapState(['currentUser']),
-      ...mapGetters('index', ['lastModifier'])
+      ...mapGetters(['lastModifier'])
     },
 
     created() {

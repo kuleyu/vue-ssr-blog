@@ -1,11 +1,12 @@
 import LRU from 'lru-cache'
 import db from './db'
+// const logger = require('../../deploy/log')
 
 export default function () {
-  console.log('server api')
+  console.log('http: server api')
 
   if (process.__API__) {
-    console.log('process.__API__')
+    console.log('http: process.__API__')
     return process.__API__
   }
 
@@ -16,6 +17,10 @@ export default function () {
     max: 1000,
     maxAge: 1000 * 60 * 15 // 15 min cache
   })
+
+  // api.logger = logger
+
+  api.onServer = true
 
   return api
 }

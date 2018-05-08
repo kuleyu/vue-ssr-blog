@@ -7,7 +7,6 @@ const resolve = file => path.resolve(__dirname, file)
 const favicon = require('serve-favicon')
 const LRU = require('lru-cache')
 const { createBundleRenderer } = require('vue-server-renderer')
-const logger = require('./deploy/log').logger('access')
 
 const isProd = process.env.NODE_ENV === 'production'
 const serverInfo = `express/${require('express/package.json').version} ` +
@@ -51,7 +50,7 @@ if (isProd) {
 }
 
 const serve = (path, cache) => express.static(resolve(path), {
-  maxAge: cache && isProd ? 1000 * 60 * 60 * 24 * 30 : 0
+  maxAge: cache && isProd ? 1000 * 60 * 60 * 24 : 0
 })
 
 app.use(compression({ threshold: 0 }))
@@ -60,8 +59,8 @@ app.use('/dist', serve('./dist', true))
 app.use('/public', serve('./public', true))
 
 function render(req, res) {
-  res.setHeader("Content-Type", "text/html")
-  res.setHeader("Server", serverInfo)
+  res.setHeader('Content-Type', 'text/html')
+  res.setHeader('Server', serverInfo)
 
   const handleError = err => {
     if (err.url) {
@@ -88,8 +87,7 @@ function render(req, res) {
 }
 
 app.get('*', isProd ? render : (req, res) => {
-  logger('in')
-  console.log(`in: ${req.url}`)
+  console.log(`access: ${req.url}`)
   readyPromise.then(() => render(req, res))
 })
 

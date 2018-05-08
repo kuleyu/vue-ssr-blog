@@ -1,12 +1,8 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import index from './modules/index'
-import detail from './modules/detail'
-import {
-  addArticle,
-  signUp,
-  getCurrentUser
-} from '../api'
+import article from './modules/article'
+import { fetch } from '../api'
+import { format } from '../assets/date'
 
 Vue.use(Vuex)
 
@@ -16,26 +12,30 @@ export function createStore() {
       currentUser: null
     },
 
+    getters: {
+      lastModifier(state) {
+        let item
+        if (state.article.list.length > 0) {
+          // 因为是按时间倒叙，所以取第一个
+          item = state.article.list[0].updatedAt
+        }
+        return format(item, 'yyyy年MM月dd日 hh:mm')
+      }
+    },
+
     modules: {
-      index: {
+      article: {
         namespaced: true,
-        ...index
-      },
-      detail: {
-        namespaced: true,
-        ...detail
+        ...article
       }
     },
 
     actions: {
-      ADD_ARTICLE: (context, data) => {
-        return addArticle(data)
-      },
       SIGN_UP: () => {
         return signUp()
       },
       CURRENT_USER: ({ commit }) => {
-        return getCurrentUser().then(user => {
+        return fetch('currentUser').then(user => {
           commit('SET_CURRENT_USER', !!user)
         })
       }

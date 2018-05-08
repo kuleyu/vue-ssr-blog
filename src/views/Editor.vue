@@ -49,19 +49,9 @@
   import { Button } from 'element-ui'
   import { mapActions, mapState } from 'vuex'
   import ArticleContent from '../components/ArticleContent.vue'
-  // import Cache from 'web-storage-cache'
-
-  // const cache = new Cache()
 
   export default {
     name: 'Editor',
-
-    // asyncData({ store, route }) {
-    //   if (route.params.id) {
-    //     //
-    //     console.log(store.state.detail.detail)
-    //   }
-    // },
 
     metaInfo() {
       return {
@@ -75,7 +65,7 @@
     },
 
     computed: {
-      ...mapState('detail', ['detail']),
+      ...mapState('article', ['detail']),
 
       compileValue() {
         return marked(this.input, {
@@ -109,7 +99,7 @@
     },
 
     methods: {
-      ...mapActions(['ADD_ARTICLE']),
+      ...mapActions('article', ['ADD_ARTICLE']),
 
       update: debounce(function(e) {
         this.input = e.target.value

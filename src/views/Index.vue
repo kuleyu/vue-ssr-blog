@@ -34,7 +34,7 @@
     },
 
     asyncData({ store }) {
-      return store.dispatch('index/FETCH_LIST', { limit: 5, field: ['title', 'vantNum'] })
+      return store.dispatch('article/FETCH_LIST', { limit: 5, field: ['title', 'vantNum'] })
     },
 
     components: {
@@ -48,7 +48,7 @@
     },
 
     computed: {
-      ...mapState('index', ['list'])
+      ...mapState('article', ['list'])
     }
   }
 </script>

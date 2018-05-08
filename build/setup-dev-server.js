@@ -5,7 +5,7 @@ const webpack = require('webpack')
 const chokidar = require('chokidar')
 const clientConfig = require('./client.dev.config')
 const serverConfig = require('./server.config')
-const logger = require('../deploy/log').logger('dev')
+// const logger = require('../deploy/log')
 
 const readFile = (fs, file) => {
   try {
@@ -14,7 +14,7 @@ const readFile = (fs, file) => {
 }
 
 module.exports = function setupDevServer(app, templatePath, cb) {
-  logger('in')
+  // logger.debug('in')
   let bundle
   let template
   let clientManifest
