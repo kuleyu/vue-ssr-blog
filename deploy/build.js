@@ -3,7 +3,10 @@ const spawn = require('child_process').spawn
 const createHandler = require('github-webhook-handler')
 const handler = createHandler({ path: '/pushCode', secret: 'auto-build-blog' })
 const app = express()
-const logger = require('./log').logger
+// const logger = require('./log').logger
+const logger = () => {
+  return console.log
+}
 const myLocalIp = require('my-local-ip')
 
 app.all('*', (req, res) => {
