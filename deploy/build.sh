@@ -5,14 +5,14 @@ git reset --hard origin/master
 git clean -f
 git pull
 
-echo 'pm2 stop server ...'
-pm2 stop server
+# echo 'pm2 stop server ...'
+# pm2 stop server
 
 echo 'npm run build ...'
 npm run build
 
 echo 'npm run start ...'
-npm start
+pm2 restart server
 
 echo 'commit build files ...'
 git add .
