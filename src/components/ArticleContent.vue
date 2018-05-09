@@ -15,48 +15,41 @@
   }
 </script>
 
-<style lang="scss">
-  @import "../assets/markdown.css";
+<style lang="stylus">
+  @import "../assets/markdown.css"
 
-  .editor__style {
-    font-size: 14px;
-    padding: 15px;
+  .editor__style
+    font-size: 14px
+    padding: 15px
 
-    blockquote {
-      margin: 0;
-    }
+    blockquote
+      margin: 0
 
-    a {
-      color: #0366d6;
-      text-decoration: none;
-    }
+    a
+      color: #0366d6
+      text-decoration: none
 
-    ul {
-      display: block;
-      list-style-type: disc;
-      -webkit-margin-before: 1em;
-      -webkit-margin-after: 1em;
-      -webkit-margin-start: 0px;
-      -webkit-margin-end: 0px;
-    }
+    ul
+      display: block
+      list-style-type: disc
+      -webkit-margin-before: 1em
+      -webkit-margin-after: 1em
+      -webkit-margin-start: 0
+      -webkit-margin-end: 0
 
-    ul ul, ol ul {
-      list-style-type: circle;
-    }
+    ul ul, ol ul
+      list-style-type: circle
 
-    ol ul, ul ol, ul ul, ol ol {
-      -webkit-margin-before: 0px;
-      -webkit-margin-after: 0px;
-    }
+    ol ul, ul ol, ul ul, ol ol
+      -webkit-margin-before: 0
+      -webkit-margin-after: 0
 
-    pre {
-      padding: 16px;
-      overflow: auto;
-      line-height: 1.45;
-      background-color: #f6f8fa;
-      border-radius: 3px;
-      font-family: "SFMono-Regular",Consolas,"Liberation Mono",Menlo,Courier,monospace;
-      font-size: 12px;
-    }
-  }
+    pre
+      padding: 16px
+      overflow: auto
+      line-height: 1.45
+      background-color: #f6f8fa
+      border-radius: 3px
+      font-family: "SFMono-Regular",Consolas,"Liberation Mono",Menlo,Courier,monospace
+      font-size: 12px
 </style>

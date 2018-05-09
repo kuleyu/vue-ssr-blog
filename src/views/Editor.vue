@@ -145,27 +145,24 @@
   }
 </script>
 
-<style lang="scss">
-  .editor__textarea {
-    font-size: 16px;
-    line-height: 1.5;
-    word-wrap: break-word;
-  }
-  .editor__wrap {
-    padding: 10px;
-    &:focus {
-      outline: none;
-    }
-  }
+<style lang="stylus">
+  .editor__textarea
+    font-size: 16px
+    line-height: 1.5
+    word-wrap: break-word
+
+  .editor__wrap
+    padding: 10px
+    &:focus
+      outline: none
+
   .editor__title,
-  .editor__tag {
-    width: 400px;
-    &:focus {
-      outline: none;
-    }
-  }
-  .editor__tag {
-    width: 200px;
-    border: none;
-  }
+  .editor__tag
+    width: 400px
+    &:focus
+      outline: none
+
+  .editor__tag
+    width: 200px
+    border: none
 </style>

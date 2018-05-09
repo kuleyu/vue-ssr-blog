@@ -4,12 +4,10 @@
   </div>
 </template>
 
-<style lang="scss">
-  .waiting {
-    h1 {
-      font-size: 50px;
-      padding-top: 100px;
-      color: #606266;
-    }
-  }
+<style lang="stylus">
+  .waiting
+    h1
+      font-size: 50px
+      padding-top: 100px
+      color: #606266
 </style>

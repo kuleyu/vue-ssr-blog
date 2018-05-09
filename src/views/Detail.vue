@@ -101,49 +101,47 @@
   }
 </script>
 
-<style lang="scss">
-  .detail__content {
-    background-color: #fff;
-    border: 1px solid #c0d3eb;
-    border-radius: 3px;
-    position: relative;
-  }
-  .detail__content-head {
-    padding: 10px 15px;
-    color: #586069;
-    background-color: #f1f8ff;
-    border-bottom: 1px solid #c0d3eb;
-    border-top-left-radius: 3px;
-    border-top-right-radius: 3px;
-    font-size: 14px;
-  }
-  .detail__options {
-    border-top: 1px solid #e1e4e8;
-  }
-  .detail__options-item {
-    display: inline-block;
-    padding: 9px 15px 7px;
-    line-height: 18px;
-    border-right: 1px solid #e1e4e8;
-    color: #0366d6;
-    cursor: pointer;
-    font: normal normal 11px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
-    -webkit-font-smoothing: subpixel-antialiased;
+<style lang="stylus">
+  .detail__content
+    background-color: #fff
+    border: 1px solid #c0d3eb
+    border-radius: 3px
+    position: relative
 
-    &:first-child {
-      border-bottom-left-radius: 2px;
-    }
+  .detail__content-head
+    padding: 10px 15px
+    color: #586069
+    background-color: #f1f8ff
+    border-bottom: 1px solid #c0d3eb
+    border-top-left-radius: 3px
+    border-top-right-radius: 3px
+    font-size: 14px
+
+  .detail__options
+    border-top: 1px solid #e1e4e8
+
+  .detail__options-item
+    display: inline-block
+    padding: 9px 15px 7px
+    line-height: 18px
+    border-right: 1px solid #e1e4e8
+    color: #0366d6
+    cursor: pointer
+    font: normal normal 11px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol"
+    -webkit-font-smoothing: subpixel-antialiased
+
+    &:first-child
+      border-bottom-left-radius: 2px
+
     &:hover,
-    &.tagged {
-      background-color: #f1f8ff;
-    }
-  }
-  .topic-tag {
-    display: inline-block;
-    padding: 0.3em 0.9em;
-    margin: 0 0.5em 0.5em 0;
-    white-space: nowrap;
-    background-color: #f1f8ff;
-    border-radius: 3px;
-  }
+    &.tagged
+      background-color: #f1f8ff
+
+  .topic-tag
+    display: inline-block
+    padding: 0.3em 0.9em
+    margin: 0 0.5em 0.5em 0
+    white-space: nowrap
+    background-color: #f1f8ff
+    border-radius: 3px
 </style>

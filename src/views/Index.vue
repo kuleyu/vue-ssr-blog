@@ -57,17 +57,16 @@
   }
 </script>
 
-<style lang="scss">
-  .index__name {
-    font-weight: bold;
-    font-size: 50px;
-    font-family: interface,-webkit-pictograph,serif;
-  }
-  .index__list {
-    border: 1px #eceeef solid;
-  }
-  .my-ssr {
-    color: #666;
-    font-size: 16px;
-  }
+<style lang="stylus">
+  .index__name
+    font-weight: bold
+    font-size: 50px
+    font-family: interface,-webkit-pictograph,serif
+
+  .index__list
+    border: 1px #eceeef solid
+
+  .my-ssr
+    color: #666
+    font-size: 16px
 </style>
