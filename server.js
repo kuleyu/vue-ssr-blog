@@ -5,6 +5,7 @@ const compression = require('compression')
 const myLocalIp = require('my-local-ip')
 const resolve = file => path.resolve(__dirname, file)
 const favicon = require('serve-favicon')
+// const routeCache = require('route-cache')
 const LRU = require('lru-cache')
 const { createBundleRenderer } = require('vue-server-renderer')
 
@@ -13,14 +14,15 @@ const serverInfo = `express/${require('express/package.json').version} ` +
   `vue-server-renderer/${require('vue-server-renderer/package.json').version}`
 
 const app = express()
+
 function createRenderer (bundle, options) {
   // https://github.com/vuejs/vue/blob/dev/packages/vue-server-renderer/README.md#why-use-bundlerenderer
   return createBundleRenderer(bundle, Object.assign(options, {
     // for component caching
-    cache: LRU({
-      max: 1000,
-      maxAge: 1000 * 60 * 15
-    }),
+    // cache: LRU({
+    //   max: 1000,
+    //   maxAge: 1000 * 60 * 15
+    // }),
     // this is only needed when vue-server-renderer is npm-linked
     basedir: resolve('./dist'),
     // recommended for performance
@@ -49,6 +51,14 @@ if (isProd) {
   )
 }
 
+// page cache
+const microCache = LRU({
+  max: 100,
+  maxAge: 1000 * 60 * 15
+})
+const isCacheable = req => {
+  return /^\/(detail|list|$)/.test(req.originalUrl)
+}
 const serve = (path, cache) => express.static(resolve(path), {
   maxAge: cache && isProd ? 1000 * 60 * 60 * 24 : 0
 })
@@ -80,15 +90,40 @@ function render(req, res) {
     url: req.url
   }
 
-  renderer.renderToStream(context)
-    .on('error', handleError)
-    .on('end', () => console.log(`whole request: ${Date.now() - now}ms`))
-    .pipe(res)
+  // renderer.renderToStream(context)
+  //   .on('error', handleError)
+  //   .on('end', () => console.log(`whole request: ${Date.now() - now}ms`))
+  //   .pipe(res)
+  renderer.renderToString(context, (err, html) => {
+    if (isCacheable(req)) {
+      microCache.set(req.url, html)
+    }
+
+    if (err) {
+      return handleError(err)
+    }
+    res.send(html)
+    // if (!isProd) {
+    console.log(`whole request: ${Date.now() - now}ms`)
+    // }
+  })
 }
 
-app.get('*', isProd ? render : (req, res) => {
+app.get('*', (req, res) => {
+  if (isCacheable(req)) {
+    const hit = microCache.get(req.url)
+    if (hit) {
+      console.log(`cache: ${req.url}`)
+      return res.end(hit)
+    }
+  }
+
   console.log(`access: ${req.url}`)
-  readyPromise.then(() => render(req, res))
+  if (isProd) {
+    render(req, res)
+  } else {
+    readyPromise.then(() => render(req, res))
+  }
 })
 
 const port = process.env.PORT || 3000

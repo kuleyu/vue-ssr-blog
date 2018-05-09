@@ -42,9 +42,9 @@ module.exports = merge(baseConfig, {
     }),
     new webpack.optimize.ModuleConcatenationPlugin(),
 
-    new ExtractTextPlugin({
-      filename: 'common.[chunkhash].css'
-    }),
+    // new ExtractTextPlugin({
+    //   filename: 'common.[chunkhash].css'
+    // }),
 
     // new OptimizeCSSPlugin(),
 

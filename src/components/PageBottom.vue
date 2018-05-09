@@ -11,12 +11,12 @@
         <router-link to="/editor">
           <span class="ib-middle">写文章</span>
         </router-link>
-        <router-link to="/plan" class="px-margin-l10">
-          <span class="ib-middle">写计划</span>
-        </router-link>
-        <a href="javascript:" class="px-margin-l10" @click="showSignIn = true">
-          <span class="ib-middle">系统设置</span>
-        </a>
+        <!--<router-link to="/plan" class="px-margin-l10">-->
+          <!--<span class="ib-middle">写计划</span>-->
+        <!--</router-link>-->
+        <!--<a href="javascript:" class="px-margin-l10" @click="showSignIn = true">-->
+          <!--<span class="ib-middle">系统设置</span>-->
+        <!--</a>-->
         <a href="javascript:" class="px-margin-l10" @click="logOut">
           <span class="ib-middle">注销</span>
         </a>
