@@ -10,5 +10,5 @@ vue服务端渲染
 - nvm管理node版本
 - [阿里云域名升级https](https://blog.csdn.net/cslucifer/article/details/79077831)
 - 页面级与接口缓存
-  - LRU
+  - [LRU](https://github.com/isaacs/node-lru-cache)
   - [route-cache](https://github.com/bradoyler/route-cache)
