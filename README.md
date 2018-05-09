@@ -1,7 +1,7 @@
 # vue-ssr-blog
 vue服务端渲染
 
-> 除了 [#32](https://github.com/Jmingzi/blog/issues/32)、[#33](https://github.com/Jmingzi/blog/issues/33)之外。
+> 前提是了解了 [#32](https://github.com/Jmingzi/blog/issues/32)、[#33](https://github.com/Jmingzi/blog/issues/33)。
 
 ### 需要额外掌握的点
 - leanCloud数据交互
