@@ -3,7 +3,8 @@
     "access": {
       "type": "dateFile",
       "filename": "log/access.log",
-      "pattern": "-yyyy-MM-dd",
+      "pattern": ".yyyy-MM-dd",
+      "alwaysIncludePattern": true,
       "category": "http"
     },
     "console": {
@@ -12,11 +13,13 @@
     "app": {
       "type": "dateFile",
       "filename": "log/app.log",
+      "pattern": ".yyyy-MM-dd",
+      "alwaysIncludePattern": true,
       "maxLogSize": 10485760,
       "numBackups": 3
     },
     "errorFile": {
-      "type": "dateFile",
+      "type": "file",
       "filename": "log/errors.log"
     },
     "errors": {
