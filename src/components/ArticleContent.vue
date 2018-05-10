@@ -44,12 +44,12 @@
       -webkit-margin-before: 0
       -webkit-margin-after: 0
 
-    pre
+    pre, code
       padding: 16px
       overflow: auto
       line-height: 1.45
       background-color: #f6f8fa
       border-radius: 3px
-      font-family: "SFMono-Regular",Consolas,"Liberation Mono",Menlo,Courier,monospace
+      font-family: "SFMono-Regular",Consolas,"Liberation Mono",Menlo,Courier,monospace !important
       font-size: 12px
 </style>

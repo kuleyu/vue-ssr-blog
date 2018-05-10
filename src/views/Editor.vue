@@ -1,7 +1,7 @@
 <template>
   <div class="editor height-100 px-font-14">
-    <div class="position-a px-height-60 width-100 top-0 px-line-60 bd-gray-lighter-b px-padding-lr15">
-      <div class="fr">
+    <div class="position-a px-height-60 width-100 top-0 px-line-60 bd-gray-lighter-b">
+      <div class="fr px-margin-r15">
         <el-button
           size="mini"
           @click="saveDraft"
@@ -18,7 +18,7 @@
       </div>
       <input
         v-model="title"
-        class="editor__title px-line-30 px-font-16 bd-gray-lighter-r ib-middle"
+        class="editor__title width-50 px-line-30 px-font-16 bd-gray-lighter-r ib-middle px-padding-lr15"
         type="text"
         placeholder="请输入标题"
       >
@@ -48,8 +48,8 @@
   import { debounce } from 'underscore'
   import { Button } from 'element-ui'
   import { mapActions, mapState } from 'vuex'
-  // import ArticleContent from '../components/ArticleContent.vue'
   const ArticleContent = () => import('../components/ArticleContent.vue')
+  import 'highlight.js/styles/vs.css'
 
   export default {
     name: 'Editor',
@@ -70,7 +70,12 @@
 
       compileValue() {
         return marked(this.input, {
-          sanitize: true
+          sanitize: true,
+          smartlists: true,
+          smartypants: true,
+          highlight: function(code) {
+            return require('highlight.js').highlightAuto(code).value
+          }
         })
       },
 
@@ -107,7 +112,7 @@
       }, 400),
 
       tab() {
-        this.input += '    '
+        this.input += '\t'
       },
 
       submit() {
@@ -158,9 +163,11 @@
 
   .editor__title,
   .editor__tag
-    width: 400px
     &:focus
       outline: none
+
+  .editor__tag
+    width: 400px
 
   .editor__tag
     width: 200px

@@ -1,11 +1,21 @@
 <template>
-  <div class="article">
-    <waiting />
+  <div class="article height-100">
+    <div class="w700 margin-auto position-r height-100">
+      <h1 class="px-padding-tb20">文章列表</h1>
+
+      <div class="list-panel radius-3 overflow-h bd-gray-lighter overflow-a">
+        <article-list
+          from="list"
+          :list="$store.state.article.list"
+        />
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
   import Waiting from '../components/Waiting.vue'
+  const ArticleList = () => import('../components/ArticleList.vue')
 
   export default {
     name: 'Article',
@@ -20,7 +30,16 @@
     },
 
     components: {
-      Waiting
+      Waiting,
+      ArticleList
     }
   }
 </script>
+
+<style lang="stylus">
+  .list-panel
+    position: absolute;
+    top: 80px;
+    width: 100%;
+    bottom: 10px;
+</style>

@@ -34,4 +34,8 @@
 
   .w700
     width: 700px
+
+  @media (max-width 700px)
+    .w700
+      width: 90%;
 </style>
