@@ -10,5 +10,5 @@ echo 'git pull complete ...'
 echo 'npm run build ...'
 npm run build
 
-echo 'npm start ...'
-pm2 restart server
+echo 'npm restart ...'
+pm2 restart start
