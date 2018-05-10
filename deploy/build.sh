@@ -7,6 +7,8 @@ git pull
 
 echo 'git pull complete ...'
 
+pm2 restart build
+
 echo 'npm run build ...'
 npm run build
 

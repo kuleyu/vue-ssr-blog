@@ -5,6 +5,8 @@
       "filename": "log/access.log",
       "pattern": ".yyyy-MM-dd",
       "alwaysIncludePattern": true,
+      "daysToKeep": 7,
+      "keepFileExt": true,
       "category": "http"
     },
     "console": {
@@ -15,6 +17,8 @@
       "filename": "log/app.log",
       "pattern": ".yyyy-MM-dd",
       "alwaysIncludePattern": true,
+      "daysToKeep": 7,
+      "keepFileExt": true,
       "maxLogSize": 10485760,
       "numBackups": 3
     },

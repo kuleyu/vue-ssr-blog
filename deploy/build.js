@@ -3,16 +3,31 @@ const spawn = require('child_process').spawn
 const createHandler = require('github-webhook-handler')
 const handler = createHandler({ path: '/pushCode', secret: 'auto-build-blog' })
 const app = express()
-// const logger = require('./log').logger
-const logger = () => {
-  return console.log
-}
+const log4js = require('log4js')
+log4js.configure({
+  appenders: {
+    "access": {
+      "type": "dateFile",
+      "filename": "log/deploy.log",
+      // "pattern": ".yyyy-MM-dd",
+      "alwaysIncludePattern": true,
+      "daysToKeep": 7,
+      "keepFileExt": true
+    }
+  },
+  categories: {
+    default: {
+      "appenders": ["access"],
+      "level": "debug"
+    }
+  }
+})
+const log = log4js.getLogger()
 const myLocalIp = require('my-local-ip')
 
 app.all('*', (req, res) => {
   handler(req, res, () => {
     if (req.method === 'POST') {
-      logger('debug')('receive post')
     } else {
       res.statusCode = 404
       res.end(`not support ${req.method} methods!`)
@@ -21,17 +36,17 @@ app.all('*', (req, res) => {
 })
 
 app.listen(8083, function() {
-  logger('debug')(`server is start at ${myLocalIp()}:8083!`)
+  log.debug(`server is start at ${myLocalIp()}:8083!`)
 })
 
 handler.on('error', function (err) {
-  logger('error')('Error:', err.message)
+  log.debug('Error:', err.message)
 })
 
 handler.on('push', (event) => {
-  logger()('Received a push event for %s to %s', event.payload.repository.name, event.payload.ref)
+  log.debug('Received a push event for %s to %s', event.payload.repository.name, event.payload.ref)
   rumCommand('sh', ['./deploy/build.sh'], txt => {
-    logger()(txt)
+    log.debug(txt)
   })
 })
 
@@ -44,7 +59,7 @@ function rumCommand(cmd, args, callback) {
   })
 
   child.stderr.on('data', (data) => {
-    logger('error')(`stderr: ${data}`)
+    log.debug(`stderr: ${data}`)
   })
 
   child.stdout.on('end', () => {
