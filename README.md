@@ -19,13 +19,14 @@ vue服务端渲染
   
 ### Feat
 - [X] pm2进程管理
-- [X] webhooks实现提交github自动打包重启
+- [X] webhooks实现提交github自动垃取打包重启
 - [X] vue全家桶实现ssr
+- [X] log4js日志输出到文件
 
 ### ToDo
 - [ ] nginx对非响应请求转发，保证访问的友好性
 - [ ] 优化缓存逻辑，目前页面级缓存与部分接口缓存均为15min。未做组件缓存
-- [ ] log4js日志输出到文件
+- [ ] 日志文件dateFile输出
 - [ ] 美化favicon.ico
 - [ ] 解决server-bundle.json(600kb)打包大的问题
 - [ ] 更合理的抽取公共css，非公共采用内联
