@@ -10,7 +10,7 @@
     "build:client": "cross-env NODE_ENV=production webpack --config build/client.prod.config.js --progress --hide-modules",
     "build:server": "cross-env NODE_ENV=production VUE_ENV=server webpack --config build/server.config.js --progress --hide-modules",
     "build": "rimraf dist && npm run build:client && npm run build:server",
-    "deploy": "node deploy/build.js"
+    "deploy": "pm2 start deploy/build.js"
   },
   "author": "",
   "license": "ISC",
