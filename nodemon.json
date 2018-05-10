@@ -1,22 +1,24 @@
 {
-    "restartable": "rs",
-    "verbose": false,
-    "env": {
-        "NODE_ENV": "development",
-        "PORT": "3000"
-    },
-    "execMap": {
-        "": "node --inspect",
-        "js": "node --inspect"
-    },
-    "watch": [
-        "src/",
-        "index.html"
-    ],
-    "ignore": [
-        ".git",
-        ".idea",
-        "node_modules"
-    ],
-    "ext": "js vue"
+  "restartable": "rs",
+  "verbose": false,
+  "env": {
+    "NODE_ENV": "production",
+    "PORT": "3000"
+  },
+  "execMap": {
+    "": "node --inspect",
+    "js": "node --inspect"
+  },
+  "watch": [
+    "./"
+  ],
+  "ignore": [
+    ".git",
+    ".idea",
+    "node_modules",
+    "dist",
+    "log",
+    "README.md"
+  ],
+  "ext": "js vue"
 }

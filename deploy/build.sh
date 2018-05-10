@@ -5,19 +5,10 @@ git reset --hard origin/master
 git clean -f
 git pull
 
-# echo 'pm2 stop server ...'
-# pm2 stop server
+echo 'git pull complete ...'
 
 echo 'npm run build ...'
 npm run build
 
-echo 'npm run start ...'
+echo 'npm start ...'
 pm2 restart server
-
-# echo 'commit build files ...'
-# git add .
-# git commit -m 'commit by server shell for build restart'
-# git push
-
-echo 'push complete ...'
-# npm run www

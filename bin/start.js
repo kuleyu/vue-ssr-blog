@@ -1,4 +1,3 @@
-#!/usr/bin/env node
 const myLocalIp = require('my-local-ip')
 
 /**

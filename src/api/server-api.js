@@ -1,12 +1,13 @@
 import LRU from 'lru-cache'
 import db from './db'
-// const logger = require('../../deploy/log')
+const log4js = require('log4js')
+const log = log4js.getLogger('http')
 
 export default function () {
-  console.log('http: server api')
+  log.info('server api')
 
   if (process.__API__) {
-    console.log('http: process.__API__')
+    log.info('process.__API__')
     return process.__API__
   }
 

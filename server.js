@@ -2,18 +2,18 @@ const express = require('express')
 const path = require('path')
 const fs = require('fs')
 const compression = require('compression')
-const myLocalIp = require('my-local-ip')
 const resolve = file => path.resolve(__dirname, file)
 const favicon = require('serve-favicon')
-// const routeCache = require('route-cache')
 const LRU = require('lru-cache')
 const { createBundleRenderer } = require('vue-server-renderer')
+const log4js = require('log4js')
 
 const isProd = process.env.NODE_ENV === 'production'
 const serverInfo = `express/${require('express/package.json').version} ` +
   `vue-server-renderer/${require('vue-server-renderer/package.json').version}`
 
 const app = express()
+const log = log4js.getLogger()
 
 function createRenderer (bundle, options) {
   // https://github.com/vuejs/vue/blob/dev/packages/vue-server-renderer/README.md#why-use-bundlerenderer
@@ -67,6 +67,7 @@ app.use(compression({ threshold: 0 }))
 app.use(favicon('./public/logo.jpeg'))
 app.use('/dist', serve('./dist', true))
 app.use('/public', serve('./public', true))
+app.use(log4js.connectLogger(log4js.getLogger('http'), { level: 'auto' }))
 
 function render(req, res) {
   res.setHeader('Content-Type', 'text/html')
@@ -80,8 +81,8 @@ function render(req, res) {
     } else {
       // Render Error Page or Redirect
       res.status(500).send('500 | Internal Server Error')
-      console.error(`error during render : ${req.url}`)
-      console.error(err.stack)
+      log.error(`error during render : ${req.url}`)
+      log.error(err.stack)
     }
   }
 
@@ -104,7 +105,7 @@ function render(req, res) {
     }
     res.send(html)
     // if (!isProd) {
-    console.log(`whole request: ${Date.now() - now}ms`)
+    log.debug(`whole request: ${Date.now() - now}ms`)
     // }
   })
 }
@@ -113,12 +114,12 @@ app.get('*', (req, res) => {
   if (isCacheable(req)) {
     const hit = microCache.get(req.url)
     if (hit) {
-      console.log(`cache: ${req.url}`)
+      log.info(`cache: ${req.url}`)
       return res.end(hit)
     }
   }
 
-  console.log(`access: ${req.url}`)
+  log.debug(`access: ${req.url}`)
   if (isProd) {
     render(req, res)
   } else {
@@ -126,7 +127,4 @@ app.get('*', (req, res) => {
   }
 })
 
-const port = process.env.PORT || 3000
-app.listen(port, () => {
-  console.log(`server is start at: ${myLocalIp()}:${port}`)
-})
+module.exports = app
