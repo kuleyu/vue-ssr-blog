@@ -49,7 +49,6 @@
   import { Button } from 'element-ui'
   import { mapActions, mapState } from 'vuex'
   const ArticleContent = () => import('../components/ArticleContent.vue')
-  import 'highlight.js/styles/vs.css'
 
   export default {
     name: 'Editor',

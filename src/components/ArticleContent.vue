@@ -3,6 +3,8 @@
 </template>
 
 <script>
+  import 'highlight.js/styles/default.css'
+
   export default {
     name: 'ArticleContent',
 
@@ -44,7 +46,7 @@
       -webkit-margin-before: 0
       -webkit-margin-after: 0
 
-    pre, code
+    pre
       padding: 16px
       overflow: auto
       line-height: 1.45
@@ -52,4 +54,7 @@
       border-radius: 3px
       font-family: "SFMono-Regular",Consolas,"Liberation Mono",Menlo,Courier,monospace !important
       font-size: 12px
+
+    code
+      font-family: "SFMono-Regular",Consolas,"Liberation Mono",Menlo,Courier,monospace !important
 </style>
