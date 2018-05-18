@@ -64,7 +64,7 @@ const serve = (path, cache) => express.static(resolve(path), {
 })
 
 app.use(compression({ threshold: 0 }))
-app.use(favicon('./public/logo.jpeg'))
+app.use(favicon('./public/logo.jpg'))
 app.use('/dist', serve('./dist', true))
 app.use('/public', serve('./public', true))
 app.use(log4js.connectLogger(log4js.getLogger('http'), { level: 'auto' }))

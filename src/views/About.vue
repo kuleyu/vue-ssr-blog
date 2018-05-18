@@ -1,11 +1,22 @@
 <template>
   <div class="about">
-    <waiting />
+    <div class="package margin-auto position-a">
+      <pre>
+        {
+          "name": "jmingzi",
+          "location": "hangzhou",
+          "job": "FER",
+          "life": "Driving, Coding, Reading, Tourism",
+          "motto": "the power for execution"
+        }
+      </pre>
+    </div>
+    <page-bottom />
   </div>
 </template>
 
 <script>
-  import Waiting from '../components/Waiting.vue'
+  const PageBottom = () => import('../components/PageBottom.vue')
 
   export default {
     name: 'About',
@@ -20,7 +31,15 @@
     },
 
     components: {
-      Waiting
+      PageBottom
     }
   }
 </script>
+
+<style lang="stylus">
+  .package
+    width: 500px;
+    top: 30%
+    left: 50%
+    transform: translate(-50%, -50%)
+</style>

@@ -153,6 +153,12 @@
       submit() {
         // validator
         const data = this.getValue()
+
+        if (!data.tag) {
+          this.$message.error('请输入标签')
+          return
+        }
+
         if (this.editId) {
           data.id = this.editId
         }
