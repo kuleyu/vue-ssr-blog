@@ -29,16 +29,36 @@
         placeholder="请输入标签，顿号分隔"
       >
     </div>
-    <textarea
-      class="editor__wrap editor__textarea position-a px-top-60 bottom-0 left-0 width-50 bd-gray-lighter-r"
-      :value="input"
-      @input="update"
-      @keydown.9.prevent="tab"
-    />
+    <div class="editor__wrapper-container position-a px-top-60 bottom-0 left-0 width-50">
+      <div class="editor__tools px-height-40 text-right font-0">
+        <div
+          v-for="item in editorTools"
+          :key="item.id"
+          @click="handleTools(item.id)"
+          class="editor__tools-item px-font-16 ib-middle px-width-40"
+        >
+          <i :class="`iconfont icon-${item.icon}`" />
+        </div>
+      </div>
+      <textarea
+        class="editor__wrap editor__textarea bd-gray-lighter-r position-a px-top-40 bottom-0 width-100"
+        ref="editor"
+        :value="input"
+        @input="update"
+        @paste="paste"
+        @keydown.9.exact.prevent="tab($event, true)"
+        @keydown.shift.exact.9.prevent="tab($event, false)"
+        placeholder="# hello world"
+      />
+    </div>
     <div
       class="editor__compile-html position-a px-top-60 bottom-0 right-0 width-50 overflow-a"
     >
       <article-content :content="compileValue" />
+    </div>
+
+    <div v-show="showProgress" class="editor__upload-progress position-f top-0 bottom-0">
+      <div class="num position-a color-fff">{{ uploadProgress }}%</div>
     </div>
   </div>
 </template>
@@ -48,6 +68,8 @@
   import { debounce } from 'underscore'
   import { Button } from 'element-ui'
   import { mapActions, mapState } from 'vuex'
+  import { uploadImg } from '../api'
+
   const ArticleContent = () => import('../components/ArticleContent.vue')
 
   export default {
@@ -85,10 +107,19 @@
 
     data() {
       return {
-        input: '# hello',
+        input: '',
         title: '',
         tag: '',
-        img: ''
+        img: '',
+        editorTools: [
+          { icon: 'code', id: 1 },
+          { icon: 'code1', id: 2 },
+          { icon: 'link', id: 3 },
+          { icon: 'image', id: 4 }
+        ],
+        showProgress: false,
+        uploadProgress: 0,
+        editor: null
       }
     },
 
@@ -103,16 +134,16 @@
       }
     },
 
+    mounted() {
+      this.editor = this.$refs.editor
+    },
+
     methods: {
       ...mapActions('article', ['ADD_ARTICLE']),
 
       update: debounce(function(e) {
         this.input = e.target.value
-      }, 400),
-
-      tab() {
-        this.input += '\t'
-      },
+      }, 100),
 
       submit() {
         // validator
@@ -136,7 +167,8 @@
       },
 
       saveDraft() {
-        this.$message.success('保存草稿成功')
+        // this.$message.success('保存草稿成功')
+        localStorage.setItem('draft', JSON.stringify(this.getValue()))
       },
 
       fillDetail() {
@@ -144,6 +176,98 @@
         this.title = title
         this.tag = tag
         this.input = input
+      },
+
+      tab(e, isAdd) {
+        let indent = ''
+        let result = ''
+        let selectedString = window.getSelection().toString()
+
+        if (isAdd) {
+          indent = '    '
+          // 每行增加对应的indent
+          result = indent + selectedString.replace(/\n/g, '\n' + indent)
+        } else {
+          // 缩进
+          // 替换行首2个tab
+          result = selectedString.replace(/^\s{4}/, '')
+          // 替换剩余换行前的tab
+          result = result.replace(/\n\s{4}/g, '\n')
+        }
+        this.insertEditorString(result, result.length)
+      },
+
+      // 插入编辑器
+      // @params insertString {String}
+      // @params focusPosBaseStart {Number}
+      // @returns
+      insertEditorString(insertString, focusPosBaseStart = 0) {
+        const { selectionStart, selectionEnd } = this.editor
+        const startString = this.input.substring(0, selectionStart)
+        const endString = this.input.substring(selectionEnd)
+
+        this.input = startString + insertString + endString
+        this.$nextTick(() => {
+          this.editor.focus()
+          this.editor.setSelectionRange(
+            selectionStart + focusPosBaseStart,
+            selectionStart + focusPosBaseStart
+          )
+        })
+      },
+
+      handleTools(id) {
+        switch(id) {
+          case 1:
+            this.insertEditorString('```\n\n```', 4)
+            break
+          case 2:
+            this.insertEditorString('``', 1)
+            break
+          case 3:
+            this.insertEditorString('[]()', 1)
+            break
+          case 4:
+            this.$message.info('请复制图片后直接粘贴')
+            // this.insertEditorString('![]()', 2)
+            break
+          default:
+        }
+      },
+
+      paste(e) {
+        const pasteItem = e.clipboardData.items[0]
+        if (pasteItem && /image/.test(pasteItem.type)) {
+          e.preventDefault()
+          const blob = pasteItem.getAsFile()
+          const rdr = new FileReader()
+          rdr.onloadend = () => {
+            this.upload(this.title, rdr.result)
+          }
+          rdr.readAsDataURL(blob)
+        } else {
+          pasteItem.getAsString(content => {
+            console.log(content)
+            this.$message.info('复制的是字符串')
+          })
+        }
+      },
+
+      upload(title, base64) {
+        let name = title || 'jmingzi'
+        uploadImg({
+          name,
+          base64: base64.split(';')[1],
+          cb: (num) => {
+            this.showProgress = true
+            this.uploadProgress = num
+          }
+        }).then(res => {
+          this.uploadProgress = 0
+          this.showProgress = false
+          const str = `![${res.id}](${res.attributes.url})`
+          this.insertEditorString(str, str.length)
+        })
       }
     }
   }
@@ -151,14 +275,27 @@
 
 <style lang="stylus">
   .editor__textarea
-    font-size: 16px
-    line-height: 1.5
+    font-size: 14px
+    line-height: 1.6
     word-wrap: break-word
+    background-color: #fafbfc
+    font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol"
 
   .editor__wrap
     padding: 10px
     &:focus
       outline: none
+
+  .editor__tools
+    border-right: 1px #eceeef solid;
+    border-bottom: 1px #eceeef solid;
+  .editor__tools-item
+    text-align center
+    height: 39px
+    line-height 39px
+    cursor: pointer
+    &:hover
+      background-color #f7f8f9
 
   .editor__title,
   .editor__tag
@@ -171,4 +308,13 @@
   .editor__tag
     width: 200px
     border: none
+
+  .editor__upload-progress
+    width: 100%
+    background-color: rgba(0, 0, 0, .5)
+    .num
+      top: 50%
+      left: 50%
+      transform: translate(-50%, -50%)
+      border-radius: 6px
 </style>

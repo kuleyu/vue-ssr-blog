@@ -75,3 +75,4 @@ export const delArticle = api.delArticle
 export const signUp = api.signUp
 export const login = api.login
 export const logout = api.logout
+export const uploadImg = api.uploadImg

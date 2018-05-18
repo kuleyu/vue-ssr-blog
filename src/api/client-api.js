@@ -20,5 +20,13 @@ export default function () {
     return article.destroy()
   }
 
+  db.uploadImg = data => {
+    return new db.AV.File(data.name, data).save({
+      onprogress(e) {
+        data.cb(e.percent)
+      }
+    })
+  }
+
   return db
 }
