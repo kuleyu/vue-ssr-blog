@@ -195,35 +195,39 @@
         let selectedString = window.getSelection().toString()
 
         if (isAdd) {
-          indent = '    '
+          indent = '  '
           // 每行增加对应的indent
           result = indent + selectedString.replace(/\n/g, '\n' + indent)
         } else {
           // 缩进
           // 替换行首2个tab
-          result = selectedString.replace(/^\s{4}/, '')
+          result = selectedString.replace(/^\s{2}/, '')
           // 替换剩余换行前的tab
-          result = result.replace(/\n\s{4}/g, '\n')
+          result = result.replace(/\n\s{2}/g, '\n')
         }
-        this.insertEditorString(result, result.length)
+        this.insertEditorString(result, result.length, !!selectedString)
       },
 
       // 插入编辑器
       // @params insertString {String}
-      // @params focusPosBaseStart {Number}
+      // @params focusPosBaseStart {Number} 相对于start的长度
+      // @params hasSelection {Boolean} 是否选中了文字
       // @returns
-      insertEditorString(insertString, focusPosBaseStart = 0) {
+      insertEditorString(
+        insertString,
+        focusPosBaseStart = 0,
+        hasSelection = false
+      ) {
         const { selectionStart, selectionEnd } = this.editor
         const startString = this.input.substring(0, selectionStart)
         const endString = this.input.substring(selectionEnd)
 
         this.input = startString + insertString + endString
         this.$nextTick(() => {
+          const startPos = hasSelection ? selectionStart : selectionStart + focusPosBaseStart
+          const endPos = selectionStart + focusPosBaseStart
           this.editor.focus()
-          this.editor.setSelectionRange(
-            selectionStart + focusPosBaseStart,
-            selectionStart + focusPosBaseStart
-          )
+          this.editor.setSelectionRange(startPos, endPos)
         })
       },
 
