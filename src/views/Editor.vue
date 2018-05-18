@@ -110,7 +110,6 @@
         input: '',
         title: '',
         tag: '',
-        img: '',
         editorTools: [
           { icon: 'code', id: 1 },
           { icon: 'code1', id: 2 },
@@ -124,18 +123,24 @@
     },
 
     created() {
-      if (this.editId) {
-        if (this.detail) {
-          this.fillDetail()
-        } else {
-          this.$message.info('当前文章详情为空')
-          history.back()
-        }
-      }
     },
 
     mounted() {
       this.editor = this.$refs.editor
+
+      let localData = localStorage.getItem('draft')
+      if (this.editId) {
+        if (this.detail) {
+          this.fillDetail(this.detail)
+        } else if (localData) {
+          this.fillDetail(JSON.parse(localData))
+        } else {
+          this.$message.info('当前文章详情为空')
+          history.back()
+        }
+      } else if (localData) {
+        this.fillDetail(JSON.parse(localData))
+      }
     },
 
     methods: {
@@ -153,6 +158,7 @@
         }
         this.ADD_ARTICLE(data).then(() => {
           this.$message.success(`${data.id ? '编辑' : '添加'}成功`)
+          localStorage.removeItem('draft')
         })
       },
 
@@ -161,18 +167,17 @@
           input: this.input,
           inputCompiled: this.compileValue,
           title: this.title,
-          tag: this.tag,
-          img: this.img
+          tag: this.tag
         }
       },
 
       saveDraft() {
-        // this.$message.success('保存草稿成功')
         localStorage.setItem('draft', JSON.stringify(this.getValue()))
+        this.$message.success('保存草稿成功')
       },
 
-      fillDetail() {
-        const { title, tag, input } = this.detail
+      fillDetail(data) {
+        const { title, tag, input } = data
         this.title = title
         this.tag = tag
         this.input = input
