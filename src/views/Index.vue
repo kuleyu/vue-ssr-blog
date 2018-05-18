@@ -5,7 +5,7 @@
       <p class="color-c999 px-margin-t10">AD & 打野</p>
     </div>
     <div class="index__list w700 margin-auto radius-3 overflow-h">
-      <div class="px-line-40 bg-f2 px-padding-lr15 cl color-c999">
+      <div class="index__one-text bg-f2 px-padding-lr15 cl color-c999">
         <span>人越往后活，便越喜欢听很多年前喜欢到窒息的歌。</span>
         <span class="fr color-ccc"> —— 05.18 杭州</span>
       </div>
@@ -70,4 +70,7 @@
   .my-ssr
     color: #666
     font-size: 16px
+
+  .index__one-text
+    padding: 10px 15px
 </style>
