@@ -6,8 +6,7 @@ const VueSSRClientPlugin = require('vue-server-renderer/client-plugin')
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
 // const HtmlWebpackPlugin = require('html-webpack-plugin')
 
-// process.env.NODE_ENV = 'development'
-
+process.env.NODE_ENV = 'development'
 module.exports = merge(baseConfig, {
   entry: {
     app: './src/entry-client.js'

@@ -5,8 +5,8 @@
   "main": "index.js",
   "private": false,
   "scripts": {
-    "dev": "node --inspect ./bin/www",
-    "start": "cross-env NODE_ENV=production pm2 start bin/start.js",
+    "dev": "cross-env NODE_ENV=development node --inspect ./bin/www",
+    "start": "pm2 start bin/start.js",
     "build:client": "cross-env NODE_ENV=production webpack --config build/client.prod.config.js --progress --hide-modules",
     "build:server": "cross-env NODE_ENV=production VUE_ENV=server webpack --config build/server.config.js --progress --hide-modules",
     "build": "rimraf dist && npm run build:client && npm run build:server",

@@ -8,14 +8,14 @@ const LRU = require('lru-cache')
 const { createBundleRenderer } = require('vue-server-renderer')
 const log4js = require('log4js')
 
-const isProd = process.env.NODE_ENV === 'production'
+const isProd = process.env.NODE_ENV !== 'development'
 const serverInfo = `express/${require('express/package.json').version} ` +
   `vue-server-renderer/${require('vue-server-renderer/package.json').version}`
 
 const app = express()
 const log = log4js.getLogger()
 
-console.log('isProd', isProd)
+console.log('isProd', isProd, process.argv[2] === '-dev')
 function createRenderer (bundle, options) {
   // https://github.com/vuejs/vue/blob/dev/packages/vue-server-renderer/README.md#why-use-bundlerenderer
   return createBundleRenderer(bundle, Object.assign(options, {
