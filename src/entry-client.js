@@ -3,6 +3,7 @@ import { createApp } from './app'
 const { app, router, store } = createApp()
 import { Message, MessageBox } from 'element-ui'
 
+Vue.config.devtools = process.env.NODE_ENV === 'development'
 Vue.prototype.$message = Message
 Vue.prototype.$box = MessageBox
 
