@@ -7,6 +7,8 @@ const utils = require('./utils')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 // const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
 
+// process.env.NODE_ENV = 'production'
+
 module.exports = merge(baseConfig, {
   module: {
     // rules: utils.styleLoaders({
