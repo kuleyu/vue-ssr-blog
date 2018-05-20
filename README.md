@@ -28,11 +28,12 @@ vue服务端渲染
 - [X] 编辑器代码高亮，tab与缩进，快捷键。
 - [X] 完成关于
 - [X] 美化favicon.ico
+- [X] nginx反向代理
 
-### ToDo
-- [ ] nginx对非响应请求转发，保证访问的友好性
+### Todo
+- [ ] nginx 缓存静态资源，开启gzip
 - [ ] 优化缓存逻辑，目前页面级缓存与部分接口缓存均为15min。未做组件缓存
-- [ ] 解决server-bundle.json(600kb)打包大的问题
+- [ ] 解决server-bundle.json(700kb)打包大的问题
 - [ ] 更合理的抽取公共css，非公共采用内联
 - [ ] 实现点赞👍
 
