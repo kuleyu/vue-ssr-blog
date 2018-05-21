@@ -25,7 +25,8 @@
     padding: 15px
 
     blockquote
-      margin: 0
+      margin-left: 0
+      margin-right: 0
 
     a
       color: #0366d6
