@@ -7,7 +7,10 @@
           "location": "hangzhou",
           "job": "FER",
           "life": "Driving, Coding, Reading, Tourism",
-          "motto": "the power for execution"
+          "motto": "the power for execution",
+
+          "about": "用vue ssr实现并部署在阿里云的blog",
+          "github": "<a target="_blank" href="https://github.com/Jmingzi/vue-ssr-blog">https://github.com/Jmingzi/vue-ssr-blog</a>"
         }
       </pre>
     </div>
