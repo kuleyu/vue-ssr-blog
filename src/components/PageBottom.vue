@@ -39,6 +39,7 @@
       </li>
     </ul>
     <p class="color-c999 px-margin-t10 px-font-12">最后更新：{{ lastModifier }}</p>
+    <p class="color-c999 px-margin-t10 px-font-12">鄂ICP备18011687号-1</p>
 
     <el-dialog
       title="登录"
