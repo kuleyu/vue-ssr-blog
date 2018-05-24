@@ -2,7 +2,7 @@
 vue服务端渲染
 
 > 前提是了解了 [#32](https://github.com/Jmingzi/blog/issues/32)、[#33](https://github.com/Jmingzi/blog/issues/33)。
-> 博客地址：[https://iming.work](iming.work)
+> 博客地址：[iming.work](https://iming.work)
 
 ### 需要额外掌握的点
 - leanCloud数据交互
