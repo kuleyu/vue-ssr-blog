@@ -17,7 +17,11 @@ export function fetch(key, condition, payload, field) {
     }
 
     case 'Article': {
-      cacheKey = `article-${payload ? payload.limit : 0}`
+      cacheKey = `article-${payload.cacheKey || 0}`
+      if (payload.cacheKey) {
+        delete payload.cacheKey
+      }
+
       if (cache && cacheKey) {
         const cacheValue = cache.get(cacheKey)
         if (cacheValue) {
@@ -38,7 +42,9 @@ export function fetch(key, condition, payload, field) {
       instance.descending('updatedAt')
       if (payload) {
         Object.keys(payload).forEach(key => {
-          instance[key] = payload[key]
+          if (payload[key]) {
+            instance[key](payload[key])
+          }
         })
       }
       return instance.find().then(res => {
@@ -76,3 +82,4 @@ export const signUp = api.signUp
 export const login = api.login
 export const logout = api.logout
 export const uploadImg = api.uploadImg
+export const totalCount = api.totalCount

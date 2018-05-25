@@ -1,20 +1,24 @@
 import {
   fetch,
   addArticle,
-  delArticle
+  delArticle,
+  totalCount
 } from '../../api'
 
 export default {
   state: {
     list: [],
+    listPageList: [],
     detail: null
   },
 
   actions: {
-    FETCH_LIST({ commit }, { limit, field }) {
-      // return fetchIndexList(limit, field).then(res => {
-      return fetch('Article', null, { limit }, field).then(res => {
-        commit('SET_LIST', res.map(item => ({
+    FETCH_LIST({ commit }, { limit, skip, field, mutations, cacheKey }) {
+      return fetch('Article', null, { limit, skip, cacheKey }, field).then(res => {
+        if (!mutations) {
+          mutations = 'SET_LIST'
+        }
+        commit(mutations, res.map(item => ({
           id: item.id,
           updatedAt: item.updatedAt,
           ...item.attributes
@@ -23,8 +27,7 @@ export default {
     },
 
     FETCH_DETAIL: ({ commit }, id) => {
-      // return fetchDetail(id).then(res => {
-      return fetch('Detail', 'Article', id, ['img', 'inputCompiled', 'tag', 'title', 'vantNum'])
+      return fetch('Detail', 'Article', id, ['img', 'inputCompiled', 'tag', 'title'])
         .then(res => {
           commit('SET_DETAIL', {
             id,
@@ -43,12 +46,18 @@ export default {
       return delArticle(data).then(() => {
         context.commit('UPDATE_ARTICLE', data.index)
       })
-    }
+    },
+
+    GET_TOTAL: () => totalCount()
   },
 
   mutations: {
     SET_LIST(state, data) {
       state.list = data
+    },
+
+    SET_LIST_PAGE(state, data) {
+      state.listPageList = data
     },
 
     SET_DETAIL: (state, data) => {

@@ -39,7 +39,7 @@
     },
 
     asyncData({ store }) {
-      return store.dispatch('article/FETCH_LIST', { limit: 5, field: ['title', 'vantNum'] })
+      return store.dispatch('article/FETCH_LIST', { limit: 5, field: ['title'] })
     },
 
     components: {

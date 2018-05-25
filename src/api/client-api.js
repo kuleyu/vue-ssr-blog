@@ -28,5 +28,9 @@ export default function () {
     })
   }
 
+  db.totalCount = () => {
+    return new db.AV.Query('Article').count()
+  }
+
   return db
 }

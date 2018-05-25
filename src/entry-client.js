@@ -1,17 +1,19 @@
 import Vue from 'vue'
 import { createApp } from './app'
 const { app, router, store } = createApp()
-import { Message, MessageBox } from 'element-ui'
+import { Message, MessageBox, Loading } from 'element-ui'
 
 Vue.config.devtools = process.env.NODE_ENV === 'development'
 Vue.prototype.$message = Message
 Vue.prototype.$box = MessageBox
+// Vue.prototype.$loading = Loading
 
 if (window.__INITIAL_STATE__) {
   store.replaceState(window.__INITIAL_STATE__)
 }
 
 router.onReady(() => {
+  let loadingInstance
   // 当第一次加载完成后
   // 页面内发生路由变化时，会触发路由钩子函数
   router.beforeResolve((to, from, next) => {
@@ -29,11 +31,13 @@ router.onReady(() => {
     }
 
     // 这里如果有加载指示器(loading indicator)，就触发
+    loadingInstance = Loading.service({ fullscreen: true })
     Promise.all(activated.map(c => {
       if (c.asyncData) {
         return c.asyncData({ store, route: to })
       }
     })).then(() => {
+      loadingInstance.close()
       // 停止加载指示器(loading indicator)
       next()
     }).catch(next)

@@ -119,7 +119,7 @@
           {
             id: 3,
             name: '文章',
-            path: '/article'
+            path: '/article/1'
           },
           {
             id: 4,
