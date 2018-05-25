@@ -2,7 +2,7 @@
 vue服务端渲染
 
 > 前提是了解了 [#32](https://github.com/Jmingzi/blog/issues/32)、[#33](https://github.com/Jmingzi/blog/issues/33)。
-> 博客地址：[http://116.62.70.156](http://116.62.70.156)，由于域名备案还未通过，所以未解析。
+> 博客地址：[iming.work](https://iming.work)
 
 ### 需要额外掌握的点
 - leanCloud数据交互
