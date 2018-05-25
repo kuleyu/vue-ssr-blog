@@ -45,4 +45,10 @@
     top: 30%
     left: 50%
     transform: translate(-50%, -50%)
+
+    @media (max-height: 700px)
+      width: 100%;
+      position: static;
+      transform: none;
+      padding-top: 100px;
 </style>

@@ -6,26 +6,6 @@
       'px-bottom-20': isFixed
     }"
   >
-    <div class="px-margin-b10">
-      <template v-if="currentUser">
-        <router-link to="/editor">
-          <span class="ib-middle">写文章</span>
-        </router-link>
-        <!--<router-link to="/plan" class="px-margin-l10">-->
-          <!--<span class="ib-middle">写计划</span>-->
-        <!--</router-link>-->
-        <!--<a href="javascript:" class="px-margin-l10" @click="showSignIn = true">-->
-          <!--<span class="ib-middle">系统设置</span>-->
-        <!--</a>-->
-        <a href="javascript:" class="px-margin-l10" @click="logOut">
-          <span class="ib-middle">注销</span>
-        </a>
-      </template>
-
-      <a href="javascript:" class="px-margin-l10 display-n" @click="signUp">
-        <span class="ib-middle">注册</span>
-      </a>
-    </div>
     <ul class="font-0 margin-auto">
       <li
         v-for="item in menu"
@@ -34,11 +14,30 @@
       >
         <router-link :to="item.path">{{ item.name }}</router-link>
       </li>
-      <li class="ib-middle px-font-14 px-width-50" v-if="!currentUser">
-        <a href="javascript:" @click="showSignIn = true">登录</a>
-      </li>
+      <template v-if="currentUser">
+        <li class="ib-middle px-font-14 px-width-50">
+          <router-link to="/editor">
+            <span class="ib-middle">写文章</span>
+          </router-link>
+        </li>
+        <li class="ib-middle px-font-14 px-width-50">
+          <a href="javascript:" class="px-margin-l10" @click="logOut">
+            <span class="ib-middle">注销</span>
+          </a>
+        </li>
+      </template>
+      <template v-if="false">
+        <li class="ib-middle px-font-14 px-width-50">
+          <a href="javascript:" @click="showSignIn = true">登录</a>
+        </li>
+        <li class="ib-middle px-font-14 px-width-50">
+          <a href="javascript:" class="px-margin-l10" @click="signUp">
+            <span class="ib-middle">注册</span>
+          </a>
+        </li>
+      </template>
     </ul>
-    <p class="color-c999 px-margin-t10 px-font-12">最后更新：{{ lastModifier }}</p>
+    <p class="color-c999 px-margin-t10 px-font-12" @click="showSignIn = true">最后更新：{{ lastModifier }}</p>
     <p class="color-c999 px-margin-t10 px-font-12">鄂ICP备18011687号-1</p>
 
     <el-dialog
@@ -183,3 +182,9 @@
   }
 </script>
 
+<style lang="stylus">
+  .page-bottom__menu
+    @media (max-height: 700px)
+      position: static;
+      padding: 50px 0 30px 0;
+</style>

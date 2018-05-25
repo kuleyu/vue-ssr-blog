@@ -1,5 +1,5 @@
 <template>
-  <div class="detail w700 margin-auto px-padding-b100">
+  <div class="detail w700 margin-auto px-padding-b50">
     <div class="detail__head px-padding-t30">
       <h1>{{ detail.title || '标题' }}</h1>
       <p class="px-margin-tb10" v-if="tag">
@@ -31,7 +31,7 @@
       </div>
     </div>
 
-    <page-bottom class="px-margin-t100" :is-fixed="false" />
+    <page-bottom class="px-margin-t50" :is-fixed="false" />
   </div>
 </template>
 
