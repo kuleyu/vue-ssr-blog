@@ -8,19 +8,21 @@
           from="list"
           :list="$store.state.article.listPageList"
         />
-      </div>
 
-      <div class="position-a px-bottom-20 width-100 text-center">
-        <pagination
-          background
-          layout="prev, pager, next"
-          :current-page="$route.params.currentPage * 1"
-          :page-size="pageSize"
-          :total="total"
-          @current-change="currentChange"
-        />
+        <div class="position-a px-bottom-15 width-100 text-center">
+          <pagination
+            background
+            layout="prev, pager, next"
+            :current-page="$route.params.currentPage * 1"
+            :page-size="pageSize"
+            :total="total"
+            @current-change="currentChange"
+          />
+        </div>
       </div>
     </div>
+
+    <page-bottom />
   </div>
 </template>
 
@@ -28,6 +30,7 @@
   import { Pagination } from 'element-ui'
   import Waiting from '../components/Waiting.vue'
   const ArticleList = () => import('../components/ArticleList.vue')
+  const PageBottom = () => import('../components/PageBottom.vue')
   const pageSize = 10
 
   export default {
@@ -74,7 +77,8 @@
     components: {
       Waiting,
       ArticleList,
-      Pagination
+      Pagination,
+      PageBottom
     },
 
     beforeRouteUpdate (to, from, next) {
@@ -96,5 +100,6 @@
     position: absolute;
     top: 80px;
     width: 100%;
-    bottom: 70px;
+    // bottom: 70px;
+    padding-bottom 60px
 </style>

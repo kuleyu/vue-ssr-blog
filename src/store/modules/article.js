@@ -21,6 +21,7 @@ export default {
         commit(mutations, res.map(item => ({
           id: item.id,
           updatedAt: item.updatedAt,
+          createdAt: item.createdAt,
           ...item.attributes
         })))
       })

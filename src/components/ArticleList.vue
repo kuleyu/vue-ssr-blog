@@ -7,7 +7,8 @@
     >
       <div class="fr color-c999">
         <!--<i class="iconfont icon-shijian ib-middle" />-->
-        <span class="ib-middle">{{ item.updatedAt | format }}</span>
+        <!--<span class="ib-middle">{{ item.updatedAt | format }}</span>-->
+        <span class="ib-middle">{{ item.createdAt | format }}</span>
         <!--<i class="iconfont icon-zan ib-middle px-margin-l10" />-->
         <!--<span class="ib-middle">{{ item.vantNum }}</span>-->
         <span
