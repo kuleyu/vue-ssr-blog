@@ -39,7 +39,7 @@ export function fetch(key, condition, payload, field) {
           instance.equalTo(key, condition[key])
         })
       }
-      instance.descending('updatedAt')
+      instance.descending('createdAt') // updatedAt
       if (payload) {
         Object.keys(payload).forEach(key => {
           if (payload[key]) {
