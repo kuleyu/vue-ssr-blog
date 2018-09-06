@@ -21,7 +21,7 @@
 </template>
 
 <script>
-  import { mapState } from 'vuex'
+  import { mapState, mapMutations } from 'vuex'
 
   const ArticleList = () => import('../components/ArticleList.vue')
   const PageBottom = () => import('../components/PageBottom.vue')
@@ -56,6 +56,14 @@
 
     computed: {
       ...mapState('article', ['list'])
+    },
+
+    created() {
+      this.SET_DETAIL(null)
+    },
+
+    methods: {
+      ...mapMutations('article', ['SET_DETAIL'])
     }
   }
 </script>

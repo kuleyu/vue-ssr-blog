@@ -143,6 +143,15 @@
       }
     },
 
+    // beforeRouteLeave(to, from, next) {
+    //   console.log(to)
+    //   this.$box.confirm('内容将不会保存，确认离开吗？').then(() => {
+    //     next()
+    //   }).catch(() => {
+    //     next(false)
+    //   })
+    // },
+
     methods: {
       ...mapActions('article', ['ADD_ARTICLE']),
 
