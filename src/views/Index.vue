@@ -5,9 +5,10 @@
       <p class="color-c999 px-margin-t10">AD & 打野</p>
     </div>
     <div class="index__list w700 margin-auto radius-3 overflow-h">
-      <div class="index__one-text bg-f2 px-padding-lr15 cl color-c999">
-        <!--<span>人越往后活，便越喜欢听很多年前喜欢到窒息的歌。</span>-->
-        <!--<span class="fr color-ccc"> —— 05.18 杭州</span>-->
+      <div
+        class="index__one-text bg-f2 px-padding-lr15 cl color-c999 cursor-p"
+        @click="$router.push('/one-word')"
+      >
         <span>自律、有计划的生活，才会留下更多回忆。</span>
         <span class="fr color-ccc"> —— 09.02 杭州·北苑</span>
       </div>

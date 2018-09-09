@@ -37,7 +37,12 @@
         </li>
       </template>
     </ul>
-    <p class="color-c999 px-margin-t10 px-font-12" @click="showSignIn = true">最后更新：{{ lastModifier }}</p>
+    <p
+      class="color-c999 px-margin-t10 px-font-12"
+      @click="showSignIn = true"
+    >
+      最后更新：{{ lastModifier }}
+    </p >
     <p class="color-c999 px-margin-t10 px-font-12">鄂ICP备18011687号-1</p>
 
     <el-dialog
@@ -113,7 +118,7 @@
           {
             id: 2,
             name: '一句',
-            path: '/plan'
+            path: '/one-word'
           },
           {
             id: 3,

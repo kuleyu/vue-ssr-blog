@@ -12,10 +12,6 @@ export function createRouter() {
         component: () => import('../views/Index.vue')
       },
       {
-        path: '/plan',
-        component: () => import('../views/Plan.vue')
-      },
-      {
         path: '/article/:currentPage',
         component: () => import('../views/Article.vue')
       },
@@ -36,6 +32,10 @@ export function createRouter() {
       {
         path: '/detail/:id',
         component: () => import('../views/Detail.vue')
+      },
+      {
+        path: '/one-word',
+        component: () => import('../views/OneWord.vue')
       }
     ]
   })
