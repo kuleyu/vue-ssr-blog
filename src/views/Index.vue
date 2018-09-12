@@ -42,7 +42,7 @@
     },
 
     asyncData({ store }) {
-      return store.dispatch('article/FETCH_LIST', { limit: 5, field: ['title'] })
+      return store.dispatch('article/FETCH_LIST', { limit: 5, field: ['title', 'tag', 'isOuterLink'] })
     },
 
     components: {

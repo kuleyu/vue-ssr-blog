@@ -30,14 +30,21 @@
       >
     </div>
     <div class="editor__wrapper-container position-a px-top-60 bottom-0 left-0 width-50">
-      <div class="editor__tools px-height-40 text-right font-0">
-        <div
-          v-for="item in editorTools"
-          :key="item.id"
-          @click="handleTools(item.id)"
-          class="editor__tools-item px-font-16 ib-middle px-width-40"
-        >
-          <i :class="`iconfont icon-${item.icon}`" />
+      <div class="editor__tools--wrap">
+        <div class="editor__tools">
+          <div class="editor__tools-left px-padding-l15">
+            <el-checkbox v-model="isOuterLink">外链</el-checkbox>
+          </div>
+          <div class="px-height-40 text-right font-0">
+            <div
+              v-for="item in editorTools"
+              :key="item.id"
+              @click="handleTools(item.id)"
+              class="editor__tools-item px-font-16 ib-middle px-width-40"
+            >
+              <i :class="`iconfont icon-${item.icon}`" />
+            </div>
+          </div>
         </div>
       </div>
       <textarea
@@ -66,7 +73,7 @@
 <script>
   import marked from 'marked'
   import { debounce } from 'underscore'
-  import { Button } from 'element-ui'
+  import { Button, Checkbox } from 'element-ui'
   import { mapActions, mapState } from 'vuex'
   import { uploadImg } from '../api'
 
@@ -83,7 +90,8 @@
 
     components: {
       ElButton: Button,
-      ArticleContent
+      ArticleContent,
+      ElCheckbox: Checkbox
     },
 
     computed: {
@@ -110,6 +118,7 @@
         input: '',
         title: '',
         tag: '',
+        isOuterLink: false,
         editorTools: [
           { icon: 'code', id: 1 },
           { icon: 'code1', id: 2 },
@@ -182,7 +191,8 @@
           input: this.input,
           inputCompiled: this.compileValue,
           title: this.title,
-          tag: this.tag
+          tag: this.tag,
+          isOuterLink: this.isOuterLink
         }
       },
 
@@ -192,10 +202,11 @@
       },
 
       fillDetail(data) {
-        const { title, tag, input } = data
+        const { title, tag, input, isOuterLink } = data
         this.title = title
         this.tag = tag
         this.input = input
+        this.isOuterLink = isOuterLink
       },
 
       tab(e, isAdd) {
@@ -311,6 +322,9 @@
       outline: none
 
   .editor__tools
+    display flex
+    justify-content space-between
+    align-items center
     border-right: 1px #eceeef solid;
     border-bottom: 1px #eceeef solid;
   .editor__tools-item

@@ -28,7 +28,7 @@ export default {
     },
 
     FETCH_DETAIL: ({ commit }, id) => {
-      return fetch('Detail', 'Article', id, ['img', 'inputCompiled', 'tag', 'title'])
+      return fetch('Detail', 'Article', id, ['img', 'inputCompiled', 'tag', 'title', 'isOuterLink'])
         .then(res => {
           commit('SET_DETAIL', {
             id,

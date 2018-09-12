@@ -19,7 +19,16 @@
           删除
         </span>
       </div>
+      <a
+        v-if="item.isOuterLink"
+        href="javascript:"
+        class="px-font-14"
+        @click="toOuter(item.tag)"
+      >
+        {{ item.title }}
+      </a>
       <router-link
+        v-else
         :to="`/detail/${item.id}`"
         class="px-font-14"
       >
@@ -69,6 +78,10 @@
 
     methods: {
       ...mapActions('article', ['DEL_ARTICLE']),
+
+      toOuter(link) {
+        window.open(link)
+      },
 
       del(item, i) {
         this.$box.confirm('确认要删除吗？')

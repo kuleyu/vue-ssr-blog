@@ -40,7 +40,7 @@
       return store.dispatch('article/FETCH_LIST', {
         limit: pageSize,
         skip: (route.params.currentPage - 1) * pageSize,
-        field: ['title'],
+        field: ['title', 'tag', 'isOuterLink'],
         mutations: 'SET_LIST_PAGE',
         cacheKey: route.params.currentPage
       })
