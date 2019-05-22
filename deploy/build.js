@@ -35,7 +35,9 @@ app.all('*', (req, res) => {
   })
 })
 
+
 app.listen(8083, function() {
+  console.log(`server is start at ${myLocalIp()}:8083!`)
   log.debug(`server is start at ${myLocalIp()}:8083!`)
 })
 
