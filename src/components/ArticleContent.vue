@@ -3,7 +3,8 @@
 </template>
 
 <script>
-  import 'highlight.js/styles/default.css'
+  // import 'highlight.js/styles/default.css'
+  import 'highlight.js/styles/github.css'
 
   export default {
     name: 'ArticleContent',

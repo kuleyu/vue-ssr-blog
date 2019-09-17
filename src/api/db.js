@@ -10,9 +10,14 @@ export default {
       return
     }
 
-    const appId = 'iYzWnL2H72jtQgNQPXUvjFqU-gzGzoHsz'
-    const appKey = 'OR3zEynwWJ7f8bk95AdiGFzJ'
-    AV.init({ appId, appKey })
+    try {
+      const appId = 'iYzWnL2H72jtQgNQPXUvjFqU-gzGzoHsz'
+      const appKey = 'OR3zEynwWJ7f8bk95AdiGFzJ'
+      if (window) {
+        AV.init({ appId, appKey })
+      }
+    } catch (e) {
+    }
     this.AV = AV
   },
 

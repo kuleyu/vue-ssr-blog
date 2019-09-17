@@ -76,7 +76,7 @@
   import { Button, Checkbox } from 'element-ui'
   import { mapActions, mapState } from 'vuex'
   import { uploadImg } from '../api'
-
+  import hljs from 'highlight.js'
   const ArticleContent = () => import('../components/ArticleContent.vue')
 
   export default {
@@ -103,7 +103,7 @@
           smartlists: true,
           smartypants: true,
           highlight: function(code) {
-            return require('highlight.js').highlightAuto(code).value
+            return hljs.highlightAuto(code).value
           }
         })
       },

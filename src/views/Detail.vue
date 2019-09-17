@@ -17,28 +17,37 @@
         </span>
         <p>
           <span class="font-bold">Jmingzi</span>
-          <span> updated at {{ detail ? detail.updatedAt : '' | format }}</span>
+          <span> createdAt at {{ detail ? detail.createdAt : '' | format }}</span>
         </p>
       </div>
 
       <article-content :content="detail ? detail.inputCompiled : ''"/>
 
-      <div class="detail__options">
-        <div class="detail__options-item">
+      <div class="detail__options" @click="handleVant">
+        <div
+          class="detail__options-item"
+          :class="{
+            tagged: hasTagged().exist
+          }"
+        >
           <img :src="require('../assets/zan.png')" class="ib-middle" width="22px" alt="git">
           <span class="ib-middle px-margin-l10">{{ detail ? detail.vantNum : '0' }}</span>
         </div>
       </div>
     </div>
 
-    <page-bottom class="px-margin-t50" :is-fixed="false" />
+    <div class="text-center px-margin-t50">
+      <img :src="require('../assets/vant.jpeg')" width="200px" alt="">
+      <p class="color-c999 px-margin-t10">如果觉得我帮助到了你，可以赞赏一根辣条钱～</p>
+    </div>
+
+    <page-bottom :is-fixed="false" />
   </div>
 </template>
 
 <script>
-  import { mapState } from 'vuex'
-  // import ArticleContent from '../components/ArticleContent.vue'
-  // import PageBottom from '../components/PageBottom.vue'
+  import AV from 'leancloud-storage'
+  import { mapState, mapActions } from 'vuex'
   import { ago } from '../assets/date'
   const PageBottom = () => import('../components/PageBottom.vue')
   const ArticleContent = () => import('../components/ArticleContent.vue')
@@ -86,6 +95,8 @@
     },
 
     methods: {
+      ...mapActions('article', ['ADD_ARTICLE']),
+
       filterHtmlTag(str) {
         if (str) {
           str = str.replace(/\n/g, '').replace(/<\/*[a-z]+.*?>/g, '')
@@ -96,6 +107,40 @@
 
       toEdit() {
         this.$router.push(`/editor/${this.$route.params.id}`)
+      },
+
+      hasTagged () {
+        let user = AV.User.current()
+        if (user) {
+          user = user.toJSON().username
+        }
+        const { vantUser = [] } = this.detail
+        const exist = vantUser.some(x => x === user)
+        return {
+          exist,
+          user,
+          vantUser
+        }
+      },
+
+      async handleVant() {
+        const { exist, user } = this.hasTagged()
+        const article = AV.Object.createWithoutData('Article', this.detail.id)
+        article.increment('vantNum', exist ? -1 : 1)
+        article[exist ? 'remove' : 'addUnique']('vantUser', user)
+        await article.save()
+        if (exist) {
+          this.detail.vantNum -= 1
+          const i = this.detail.vantUser.findIndex(x => x === user)
+          this.detail.vantUser.splice(i, 1)
+        } else {
+          this.detail.vantNum += 1
+          if (!this.detail.vantUser) {
+            this.$set(this.detail, 'vantUser', [user])
+          } else {
+            this.detail.vantUser.push(user)
+          }
+        }
       }
     }
   }

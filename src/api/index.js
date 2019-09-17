@@ -55,13 +55,13 @@ export function fetch(key, condition, payload, field) {
 
     case 'Detail': {
       cacheKey = `detail-${payload}`
-      if (cache && cacheKey) {
-        const cacheValue = cache.get(cacheKey)
-        if (cacheValue) {
-          console.log(`http: get article detail from cache, key: ${cacheKey}`)
-          return Promise.resolve(cacheValue)
-        }
-      }
+      // if (cache && cacheKey) {
+      //   const cacheValue = cache.get(cacheKey)
+      //   if (cacheValue) {
+      //     console.log(`http: get article detail from cache, key: ${cacheKey}`)
+      //     return Promise.resolve(cacheValue)
+      //   }
+      // }
 
       return new AV.Query(condition)
         .get(payload)

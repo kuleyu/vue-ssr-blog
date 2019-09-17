@@ -1,12 +1,18 @@
 const express = require('express')
 const path = require('path')
 const fs = require('fs')
+// const https = require('https')
+const axios = require('axios')
 const compression = require('compression')
 const resolve = file => path.resolve(__dirname, file)
 const favicon = require('serve-favicon')
 const LRU = require('lru-cache')
 const { createBundleRenderer } = require('vue-server-renderer')
 const log4js = require('log4js')
+const AV = require('leancloud-storage')
+const appId = 'iYzWnL2H72jtQgNQPXUvjFqU-gzGzoHsz'
+const appKey = 'OR3zEynwWJ7f8bk95AdiGFzJ'
+AV.init({ appId, appKey })
 
 const isProd = process.env.NODE_ENV !== 'development'
 const serverInfo = `express/${require('express/package.json').version} ` +
@@ -58,7 +64,9 @@ const microCache = LRU({
   maxAge: 1000 * 60 * 15
 })
 const isCacheable = req => {
-  return /^\/(detail|list|$)/.test(req.originalUrl)
+  const isDetailApi = /^\/detail\/[a-z0-9]+$/.test(req.originalUrl)
+  // console.log(isDetailApi)
+  return /^\/(detail|list|$)/.test(req.originalUrl) && !isDetailApi
 }
 const serve = (path, cache) => express.static(resolve(path), {
   maxAge: cache && isProd ? 1000 * 60 * 60 * 24 : 0
@@ -112,6 +120,50 @@ function render(req, res) {
     // }
   })
 }
+
+app.get('/oauth/redirect', async (req, res) => {
+  res.type('application/json')
+
+  const { data: { access_token } } = await axios({
+    url: `https://github.com/login/oauth/access_token?client_id=fd499caa8b7738da9ec4&client_secret=9350d2b4bdc72e1e8cabb6db3f85b01b34ea0129&code=${req.query.code}`,
+    method: 'post',
+    headers: {
+      accept: 'application/json'
+    }
+  })
+
+  let userRes
+  if (access_token) {
+    userRes = await axios({
+      method: 'get',
+      url: `https://api.github.com/user`,
+      headers: {
+        accept: 'application/json',
+        Authorization: `token ${access_token}`
+      }
+    })
+    const { login, node_id, email, avatar_url } = userRes.data
+    // 将 github 用户信息注册到数据库
+    const user = new AV.User()
+    user.setUsername(login)
+    user.setPassword(node_id)
+    user.setEmail(email)
+    user.set('github', userRes.data)
+    try {
+      await user.signUp()
+      // 登录
+      const signRes = await AV.User.logIn(login, node_id)
+      res.status(200).send({ success: true, data: signRes.toJSON() })
+    } catch (e) {
+      if (e.code === 202) {
+        // 已存在
+        res.status(200).send({ success: true, data: { login, node_id, avatar_url } })
+      } else {
+        res.status(500).send({ success: false, data: e })
+      }
+    }
+  }
+})
 
 app.get('*', (req, res) => {
   if (isCacheable(req)) {

@@ -15,7 +15,7 @@
         <router-link :to="item.path">{{ item.name }}</router-link>
       </li>
       <template v-if="currentUser">
-        <li class="ib-middle px-font-14 px-width-50">
+        <li v-if="hasWrite()" class="ib-middle px-font-14 px-width-50">
           <router-link to="/editor">
             <span class="ib-middle">写文章</span>
           </router-link>
@@ -26,10 +26,10 @@
           </a>
         </li>
       </template>
+      <li v-else class="ib-middle px-font-14">
+        <a href="javascript:" @click="handleGithub">使用 github 登录</a>
+      </li>
       <template v-if="false">
-        <li class="ib-middle px-font-14 px-width-50">
-          <a href="javascript:" @click="showSignIn = true">登录</a>
-        </li>
         <li class="ib-middle px-font-14 px-width-50">
           <a href="javascript:" class="px-margin-l10" @click="signUp">
             <span class="ib-middle">注册</span>
@@ -39,7 +39,6 @@
     </ul>
     <p
       class="color-c999 px-margin-t10 px-font-12"
-      @click="showSignIn = true"
     >
       最后更新：{{ lastModifier }}
     </p >
@@ -79,7 +78,9 @@
 <script>
   import { mapActions, mapState, mapGetters } from 'vuex'
   import { Dialog, Button, Form, FormItem, Input } from 'element-ui'
+  import AV from 'leancloud-storage'
   import { login, logout } from '../api'
+  import axios from 'axios'
 
   export default {
     name: 'PageBottom',
@@ -182,6 +183,25 @@
           this.CURRENT_USER()
           this.$message.success('注销成功')
         })
+      },
+
+      hasWrite () {
+        let user = AV.User.current()
+        if (user) {
+          user = user.toJSON().username
+        }
+        return user && /^Jmingzi$/i.test(user)
+      },
+
+      async handleGithub() {
+        const loading = this.$loading({ text: '处理中...' })
+        const { data: { success, data: { login, node_id } } } = await axios.get('https://github.com/login/oauth/authorize?client_id=fd499caa8b7738da9ec4&redirect_uri=http://localhost:3000/oauth/redirect')
+        if (success) {
+          await AV.User.logIn(login, node_id)
+          this.CURRENT_USER()
+          this.$message.success('登录成功')
+        }
+        loading.close()
       }
     }
   }

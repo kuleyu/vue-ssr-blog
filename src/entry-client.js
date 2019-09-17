@@ -6,7 +6,7 @@ import { Message, MessageBox, Loading } from 'element-ui'
 Vue.config.devtools = process.env.NODE_ENV === 'development'
 Vue.prototype.$message = Message
 Vue.prototype.$box = MessageBox
-// Vue.prototype.$loading = Loading
+Vue.prototype.$loading = Loading.service
 
 if (window.__INITIAL_STATE__) {
   store.replaceState(window.__INITIAL_STATE__)
