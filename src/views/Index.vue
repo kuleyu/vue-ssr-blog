@@ -9,8 +9,8 @@
         class="index__one-text bg-f2 px-padding-lr15 cl color-c999 cursor-p"
         @click="$router.push('/one-word')"
       >
-        <span>自律、有计划的生活，才会留下更多回忆。</span>
-        <span class="fr color-ccc"> —— 09.02 杭州·北苑</span>
+        <span>Be calm, be thinking !</span>
+        <span class="fr color-ccc"> —— 09.17 杭州</span>
       </div>
       <article-list
         :list="list"

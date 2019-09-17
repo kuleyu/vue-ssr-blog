@@ -13,8 +13,9 @@ export default {
     try {
       const appId = 'iYzWnL2H72jtQgNQPXUvjFqU-gzGzoHsz'
       const appKey = 'OR3zEynwWJ7f8bk95AdiGFzJ'
+      const serverURLs = 'https://api.iming.work'
       if (window) {
-        AV.init({ appId, appKey })
+        AV.init({ appId, appKey, serverURLs })
       }
     } catch (e) {
     }

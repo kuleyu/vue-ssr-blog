@@ -12,7 +12,8 @@ const log4js = require('log4js')
 const AV = require('leancloud-storage')
 const appId = 'iYzWnL2H72jtQgNQPXUvjFqU-gzGzoHsz'
 const appKey = 'OR3zEynwWJ7f8bk95AdiGFzJ'
-AV.init({ appId, appKey })
+const serverURLs = 'https://api.iming.work'
+AV.init({ appId, appKey, serverURLs })
 
 const isProd = process.env.NODE_ENV !== 'development'
 const serverInfo = `express/${require('express/package.json').version} ` +

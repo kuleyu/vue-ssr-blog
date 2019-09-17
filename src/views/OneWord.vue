@@ -52,13 +52,18 @@
       return {
         list: [
           {
+            content: 'Be calm, be thinking !',
+            time: '19.09.17',
+            locate: '杭州'
+          },
+          {
             content: '自律、有计划的生活，才会留下更多回忆。',
-            time: '09.02',
+            time: '18.09.02',
             locate: '杭州·北苑'
           },
           {
             content: '人越往后活，便越喜欢听很多年前喜欢到窒息的歌。',
-            time: '05.18',
+            time: '18.05.18',
             locate: '杭州·北苑'
           }
         ],
