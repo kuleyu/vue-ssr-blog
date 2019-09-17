@@ -23,12 +23,13 @@
 
       <article-content :content="detail ? detail.inputCompiled : ''"/>
 
-      <div class="detail__options" @click="handleVant">
+      <div class="detail__options">
         <div
           class="detail__options-item"
           :class="{
             tagged: hasTagged().exist
           }"
+          @click="handleVant"
         >
           <img :src="require('../assets/zan.png')" class="ib-middle" width="22px" alt="git">
           <span class="ib-middle px-margin-l10">{{ detail ? detail.vantNum : '0' }}</span>
