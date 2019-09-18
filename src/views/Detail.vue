@@ -50,6 +50,7 @@
   import AV from 'leancloud-storage'
   import { mapState, mapActions } from 'vuex'
   import { ago } from '../assets/date'
+  import { handleGithub } from '../assets/util'
   const PageBottom = () => import('../components/PageBottom.vue')
   const ArticleContent = () => import('../components/ArticleContent.vue')
 
@@ -125,7 +126,15 @@
       },
 
       async handleVant() {
-        const { exist, user } = this.hasTagged()
+        // 未登录提示去登录
+        const { user, exist } = this.hasTagged()
+        if (!user) {
+          await this.$box.confirm('当前未登录，是否使用 github 登录？')
+          handleGithub.call(this)
+          return
+        }
+
+        // const { exist, user } = this.hasTagged()
         const article = AV.Object.createWithoutData('Article', this.detail.id)
         article.increment('vantNum', exist ? -1 : 1)
         article[exist ? 'remove' : 'addUnique']('vantUser', user)

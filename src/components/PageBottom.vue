@@ -80,7 +80,7 @@
   import { Dialog, Button, Form, FormItem, Input } from 'element-ui'
   import AV from 'leancloud-storage'
   import { login, logout } from '../api'
-  import axios from 'axios'
+  import { handleGithub } from '../assets/util'
 
   export default {
     name: 'PageBottom',
@@ -193,15 +193,8 @@
         return user && /^Jmingzi$/i.test(user)
       },
 
-      async handleGithub() {
-        const loading = this.$loading({ text: '处理中...' })
-        const { data: { success, data: { login, node_id } } } = await axios.get('https://github.com/login/oauth/authorize?client_id=fd499caa8b7738da9ec4&redirect_uri=https://iming.work/oauth/redirect')
-        if (success) {
-          await AV.User.logIn(login, node_id)
-          this.CURRENT_USER()
-          this.$message.success('登录成功')
-        }
-        loading.close()
+      handleGithub() {
+        handleGithub.call(this)
       }
     }
   }
