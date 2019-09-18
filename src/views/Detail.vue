@@ -42,7 +42,7 @@
       <p class="color-c999 px-margin-t10">如果觉得我帮助到了你，可以赞赏一根辣条钱～</p>
     </div>
 
-    <page-bottom :is-fixed="false" />
+    <page-bottom class="px-margin-t50" :is-fixed="false" />
   </div>
 </template>
 
