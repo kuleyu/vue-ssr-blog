@@ -66,7 +66,7 @@
       return {
         title: detail.title || '文章详情',
         meta: [
-          { vmid: 'keywords', name: 'keywords', content: detail.tag },
+          { vmid: 'keywords', name: 'keywords', content: 'jmingzi，前端博客，' + detail.tag },
           { vmid: 'description', name: 'description', content: this.filterHtmlTag(detail.inputCompiled).substr(0, 150) }
         ]
       }

@@ -27,8 +27,8 @@
     metaInfo: {
       title: '关于',
       meta: [
-        { vmid: 'keywords', name: 'keywords', content: 'jmingzi，nodejs，h5学习，小程序学习，pwa学习，前端学习，前端开发' },
-        { vmid: 'description', name: 'description', content: '爱学习，爱生活，爱前端' },
+        { vmid: 'keywords', name: 'keywords', content: '前端博客，web前端，nodejs，vue，react，javascript，html，css' },
+        { vmid: 'description', name: 'description', content: 'jmingzi的个人博客，前端基础教程、前端框架学习、前端代码分享、前端技术指导、分享在工作中总结的实战开发经验' },
         { name: 'author', content: 'jmingzi' }
       ]
     },
