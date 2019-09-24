@@ -151,7 +151,7 @@
       this.CURRENT_USER()
 
       const loginName = location.search.match(/login=([\w-_]+)&?/)
-      if (loginName && loginName[1]) {
+      if (!this.currentUser && loginName && loginName[1]) {
         // 根据用户名查询密码登录
         handleLogin.call(this, loginName[1])
       }
