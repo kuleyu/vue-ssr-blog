@@ -123,7 +123,8 @@ function render(req, res) {
 }
 
 app.get('/github', async (req, res) => {
-  res.redirect('https://github.com/login/oauth/authorize?client_id=fd499caa8b7738da9ec4&redirect_uri=https://iming.work/oauth/redirect')
+  res.location('https://github.com/login/oauth/authorize?client_id=fd499caa8b7738da9ec4&redirect_uri=https://iming.work/oauth/redirect')
+  res.statusCode(302)
 })
 
 app.get('/oauth/redirect', async (req, res) => {
