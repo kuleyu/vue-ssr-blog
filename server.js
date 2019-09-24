@@ -122,6 +122,10 @@ function render(req, res) {
   })
 }
 
+app.get('/github', async (req, res) => {
+  res.redirect('https://github.com/login/oauth/authorize?client_id=fd499caa8b7738da9ec4&redirect_uri=https://iming.work/oauth/redirect')
+})
+
 app.get('/oauth/redirect', async (req, res) => {
   res.type('application/json')
 
