@@ -18,9 +18,10 @@ export async function handleLogin(name) {
   if (!currentUser) {
     const userQuery = new AV.Query('_User')
     userQuery.equalTo('username', name)
-    const res = await userQuery.find()
-    if (res && res[1]) {
-      const user = res[1].toJSON()
+    const { result } = await userQuery.find()
+    console.log(result)
+    if (result && result[1]) {
+      const user = result[1].toJSON()
       await AV.User.logIn(name, user.github.node_id)
       this.CURRENT_USER()
       this.$message.success('登录成功')
