@@ -19,6 +19,7 @@ export async function handleLogin(name) {
     const userQuery = new AV.Query('_User')
     userQuery.equalTo('username', name)
     const res = await userQuery.find()
+    console.log(res)
     console.log(res[1])
     if (res && res[1]) {
       const user = res[1].toJSON()
