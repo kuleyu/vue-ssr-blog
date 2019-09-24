@@ -18,8 +18,9 @@ export async function handleLogin(name) {
   if (!currentUser) {
     const userQuery = new AV.Query('_User')
     userQuery.equalTo('username', name)
-    const { result } = await userQuery.find()
-    console.log(result)
+    const res = await userQuery.find()
+    console.log(res)
+    const { result } = res.toJSON()
     if (result && result[1]) {
       const user = result[1].toJSON()
       await AV.User.logIn(name, user.github.node_id)
