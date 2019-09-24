@@ -123,8 +123,7 @@ function render(req, res) {
 }
 
 app.get('/github', async (req, res) => {
-  res.location('https://github.com/login/oauth/authorize?client_id=fd499caa8b7738da9ec4&redirect_uri=https://iming.work/oauth/redirect')
-  res.statusCode(302)
+  res.redirect('https://github.com/login/oauth/authorize?client_id=fd499caa8b7738da9ec4&redirect_uri=https://iming.work/oauth/redirect')
 })
 
 app.get('/oauth/redirect', async (req, res) => {
@@ -158,12 +157,14 @@ app.get('/oauth/redirect', async (req, res) => {
     try {
       await user.signUp()
       // 登录
-      const signRes = await AV.User.logIn(login, node_id)
-      res.status(200).send({ success: true, data: signRes.toJSON() })
+      // const signRes = await AV.User.logIn(login, node_id)
+      // res.status(200).send({ success: true, data: signRes.toJSON() })
+      res.redirect(`https://iming.work/?login=${login}`)
     } catch (e) {
       if (e.code === 202) {
         // 已存在
-        res.status(200).send({ success: true, data: { login, node_id, avatar_url } })
+        // res.status(200).send({ success: true, data: { login, node_id, avatar_url } })
+        res.redirect(`https://iming.work/?login=${login}`)
       } else {
         res.status(500).send({ success: false, data: e })
       }

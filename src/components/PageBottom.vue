@@ -80,7 +80,7 @@
   import { Dialog, Button, Form, FormItem, Input } from 'element-ui'
   import AV from 'leancloud-storage'
   import { login, logout } from '../api'
-  import { handleGithub } from '../assets/util'
+  import { handleGithub, handleLogin } from '../assets/util'
 
   export default {
     name: 'PageBottom',
@@ -147,8 +147,14 @@
       ...mapGetters(['lastModifier'])
     },
 
-    created() {
+    async created() {
       this.CURRENT_USER()
+
+      const loginName = location.search.match(/login=([\w-_]+)&?/)
+      if (loginName && loginName[1]) {
+        // 根据用户名查询密码登录
+        handleLogin.call(this, loginName)
+      }
     },
 
     methods: {
