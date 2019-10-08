@@ -1,16 +1,46 @@
 <template>
-  <ul>
+  <ul v-if="isIndex">
+    <li
+      v-for="(item, i) in list.slice(0, 3)"
+      :key="i"
+    >
+      <a
+        v-if="item.isOuterLink"
+        href="javascript:"
+        class="px-font-20 link-a"
+        @click="toOuter(item.tag)"
+      >
+        {{ item.title }}
+      </a>
+      <template v-else>
+        <router-link
+          :to="`/detail/${item.id}`"
+          class="px-font-20 link-a"
+        >
+          <span>{{ item.title }}</span>
+        </router-link>
+      </template>
+      <div class="color-c999 px-margin-tb10">
+        <span class="ib-middle">{{ item.createdAt | format }}</span>
+        <span
+          v-if="currentUser"
+          class="color-error ib-middle px-margin-l10 cursor-p"
+          @click="del(item, i)"
+        >
+          删除
+        </span>
+      </div>
+      <p v-if="!item.isOuterLink" class="px-font-14 color-c666">{{ item.inputCompiled | summary }}</p>
+    </li>
+  </ul>
+  <ul v-else>
     <li
       class="px-line-45 px-padding-lr15 cl bd-gray-lighter-b hover"
       v-for="(item, i) in list"
       :key="i"
     >
       <div class="fr color-c999">
-        <!--<i class="iconfont icon-shijian ib-middle" />-->
-        <!--<span class="ib-middle">{{ item.updatedAt | format }}</span>-->
         <span class="ib-middle">{{ item.createdAt | format }}</span>
-        <!--<i class="iconfont icon-zan ib-middle px-margin-l10" />-->
-        <!--<span class="ib-middle">{{ item.vantNum }}</span>-->
         <span
           v-if="currentUser"
           class="color-error ib-middle px-margin-l10 cursor-p"
@@ -35,19 +65,13 @@
         <span>{{ item.title }}</span>
       </router-link>
     </li>
-    <li
-      v-if="!from"
-      class="px-line-40 px-padding-lr15 cl text-center hover cursor-p"
-      @click="$router.push('/article/1')"
-    >
-      <i class="iconfont icon-gengduo px-font-24" />
-    </li>
   </ul>
 </template>
 
 <script>
   import { mapState, mapActions } from 'vuex'
   import { ago } from '../assets/date'
+  import { summary } from '../assets/util'
 
   export default {
     name: 'ArticleList',
@@ -59,7 +83,8 @@
         res = new Date().ago(str)
         Date.prototype.ago = null
         return res
-      }
+      },
+      summary
     },
 
     props: {
@@ -73,7 +98,11 @@
     },
 
     computed: {
-      ...mapState(['currentUser'])
+      ...mapState(['currentUser']),
+
+      isIndex() {
+        return this.from === 'index'
+      }
     },
 
     methods: {

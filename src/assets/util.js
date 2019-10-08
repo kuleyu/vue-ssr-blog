@@ -27,3 +27,11 @@ export async function handleLogin(name) {
     }
   }
 }
+
+export const summary = (str) => {
+  if (str) {
+    str = str.replace(/\n/g, '').replace(/<\/*[a-z]+.*?>/g, '')
+    return str.substr(0, 100) + '......'
+  }
+  return ''
+}

@@ -1,9 +1,10 @@
 <template>
   <div
-    class="page-bottom__menu width-100 text-center"
+    class="page-bottom__menu width-100"
     :class="{
-      'position-a': isFixed,
-      'px-bottom-20': isFixed
+      'px-margin-t50': isFixed,
+      'px-padding-tb50': isFixed,
+      'text-center': !isFixed
     }"
   >
     <ul class="font-0 margin-auto">
@@ -12,32 +13,38 @@
         :key="item.id"
         class="ib-middle px-font-14 px-width-50"
       >
-        <router-link :to="item.path">{{ item.name }}</router-link>
+        <router-link
+          class="link-a"
+          :to="item.path"
+        >
+          {{ item.name }}
+        </router-link>
       </li>
       <template v-if="currentUser">
         <li v-if="hasWrite()" class="ib-middle px-font-14 px-width-50">
-          <router-link to="/editor">
+          <router-link class="link-a" to="/editor">
             <span class="ib-middle">写文章</span>
           </router-link>
         </li>
         <li class="ib-middle px-font-14 px-width-50">
-          <a href="javascript:" class="px-margin-l10" @click="logOut">
+          <a href="javascript:" class="link-a px-margin-l10" @click="logOut">
             <span class="ib-middle">注销</span>
           </a>
         </li>
       </template>
       <li v-else class="ib-middle px-font-14">
-        <a href="javascript:" @click="handleGithub">使用 github 登录</a>
+        <a class="link-a" href="javascript:" @click="handleGithub">Github 登录</a>
       </li>
       <template v-if="false">
         <li class="ib-middle px-font-14 px-width-50">
-          <a href="javascript:" class="px-margin-l10" @click="signUp">
+          <a href="javascript:" class="px-margin-l10 link-a" @click="signUp">
             <span class="ib-middle">注册</span>
           </a>
         </li>
       </template>
     </ul>
     <p
+      v-if="!isFixed"
       class="color-c999 px-margin-t10 px-font-12"
     >
       最后更新：{{ lastModifier }}
@@ -208,7 +215,7 @@
 
 <style lang="stylus">
   .page-bottom__menu
-    @media (max-height: 700px)
+    @media (max-height: 670px)
       position: static;
       padding: 50px 0 30px 0;
 </style>
