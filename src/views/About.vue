@@ -1,6 +1,6 @@
 <template>
   <div class="about">
-    <div class="package margin-auto position-a">
+    <div class="package">
       <pre>
         {
           "name": "jmingzi",
@@ -14,11 +14,17 @@
         }
       </pre>
     </div>
-    <page-bottom />
+    <page-bottom
+      :is-fixed="false"
+    />
   </div>
 </template>
 
 <script>
+  // import hljs from "highlight.js"
+  // import "highlight.js/styles/github.css"
+  // import MarkDisplay, { setHighlighter } from "vue-mark-display"
+  // setHighlighter(code => hljs.highlightAuto(code).value)
   const PageBottom = () => import('../components/PageBottom.vue')
 
   export default {
@@ -40,15 +46,17 @@
 </script>
 
 <style lang="stylus">
+  .about
+    display flex
+    flex-direction column
+    justify-content center
+    align-items center
   .package
     width: 500px;
-    top: 30%
-    left: 50%
-    transform: translate(-50%, -50%)
+    margin-top 20%
+    margin-bottom 100px
 
-    @media (max-height: 700px)
+    @media (max-height: 812px)
       width: 100%;
-      position: static;
-      transform: none;
       padding-top: 100px;
 </style>

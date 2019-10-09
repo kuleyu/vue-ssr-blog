@@ -1,6 +1,6 @@
 <template>
   <div class="article height-100">
-    <div class="w700 margin-auto position-r height-100">
+    <div class="w700 margin-auto position-r">
       <h1 class="px-padding-tb20">文章列表</h1>
 
       <div class="list-panel radius-3 overflow-h bd-gray-lighter overflow-a">
@@ -22,7 +22,7 @@
       </div>
     </div>
 
-    <page-bottom />
+    <page-bottom class="px-margin-t100" :is-fixed="false" />
   </div>
 </template>
 
@@ -97,8 +97,8 @@
 
 <style lang="stylus">
   .list-panel
-    position: absolute;
-    top: 80px;
+    // position: absolute;
+    // top: 80px;
     width: 100%;
     // bottom: 70px;
     padding-bottom 60px
