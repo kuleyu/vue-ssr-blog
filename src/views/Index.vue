@@ -1,7 +1,7 @@
 <template>
   <div class="index__wrap">
     <div class="px-padding-t70 px-margin-b50">
-      <h1 class="index__name">Jmingzi</h1>
+      <h1 class="index__name"><a href="#" style="color: #333">Jmingzi</a></h1>
       <p class="color-c999 px-margin-t10">AD & 打野</p>
     </div>
     <div class="index__list">
@@ -115,18 +115,10 @@
     font-family: interface,-webkit-pictograph,serif
 
   .index__list
-    // border: 1px #eceeef solid
-    // height calc(100vh - 350px)
-    // overflow hidden
-    // position relative
-    // &:after
-    //  position absolute
-    //  content: ""
-    //  top: 50%
-    //  left: -0.1em
-    //  right: -0.1em
-    //  bottom: 0
-    //  background: linear-gradient(transparent, #fff)
+    .seo-block
+      position fixed
+      top -100%
+      left 0
     li
       margin-bottom 45px
   .my-ssr

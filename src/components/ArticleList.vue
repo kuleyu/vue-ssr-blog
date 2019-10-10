@@ -32,6 +32,18 @@
       </div>
       <p v-if="!item.isOuterLink" class="px-font-14 color-c666">{{ item.inputCompiled | summary }}</p>
     </li>
+    <ul class="seo-block">
+      <li
+        v-for="(item, i) in list.slice(3, 5)"
+        :key="i"
+      >
+        <a v-if="item.isOuterLink" :href="item.tag">{{  }}</a>
+        <template v-else>
+          <router-link :to="`/detail/${item.id}`">{{ item.title }}</router-link>
+          <p>{{ item.inputCompiled | summary }}</p>
+        </template>
+      </li>
+    </ul>
   </ul>
   <ul v-else>
     <li

@@ -1,7 +1,6 @@
 const express = require('express')
 const path = require('path')
 const fs = require('fs')
-// const https = require('https')
 const axios = require('axios')
 const compression = require('compression')
 const resolve = file => path.resolve(__dirname, file)
@@ -124,6 +123,16 @@ function render(req, res) {
 
 app.get('/github', async (req, res) => {
   res.redirect('https://github.com/login/oauth/authorize?client_id=fd499caa8b7738da9ec4&redirect_uri=https://iming.work/oauth/redirect')
+})
+
+app.get('/sitemap', (req, res) => {
+  require('child_process').execFile('node', ['gen-sitemap.js'], (err, stdout) => {
+    if (err) {
+      res.status(500).send(err)
+    } else {
+      res.status(200).send(stdout || '执行成功！')
+    }
+  })
 })
 
 app.get('/oauth/redirect', async (req, res) => {
