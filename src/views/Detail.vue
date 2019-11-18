@@ -163,6 +163,21 @@
     border-radius: 3px
     position: relative
 
+  .markdown-body 
+    ol ol
+    ul ol
+      list-style-type lower-roman
+      ul 
+        list-style square
+      ol
+        list-style lower-alpha
+    ul ul        
+    ol ul
+      ol
+        list-style lower-alpha
+    ol
+      list-style decimal
+
   .detail__content-head
     padding: 10px 15px
     color: #586069
