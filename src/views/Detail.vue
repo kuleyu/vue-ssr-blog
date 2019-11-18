@@ -163,20 +163,19 @@
     border-radius: 3px
     position: relative
 
-  .markdown-body 
-    ol ol
-    ul ol
-      list-style-type lower-roman
-      ul 
-        list-style square
-      ol
-        list-style lower-alpha
-    ul ul        
-    ol ul
-      ol
-        list-style lower-alpha
+  .markdown-body ol ol
+  .markdown-body ul ol
+    list-style-type lower-roman
+    ul 
+      list-style square
     ol
-      list-style decimal
+      list-style lower-alpha
+  .markdown-body ul ul,
+  .markdown-body ol ul
+    ol
+      list-style lower-alpha
+  .markdown-body ol
+    list-style decimal
 
   .detail__content-head
     padding: 10px 15px
