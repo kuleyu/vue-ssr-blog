@@ -14,6 +14,12 @@
   }
 </script>
 
+<style lang="less">
+@border-color: #eee;
+@bg-color: #f2f2f2;
+@main-color: #4e9afa;
+@import '~v-comment/src/style/index.less';
+</style>
 <style lang="stylus">
   html, body, #app
     height: 100%

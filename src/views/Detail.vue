@@ -39,8 +39,10 @@
 
     <div class="text-center px-margin-t50">
       <img :src="require('../assets/vant.jpeg')" width="200px" alt="">
-      <p class="color-c999 px-margin-t10">如果觉得我帮助到了你，可以赞赏一根辣条钱～</p>
+      <!--<p class="color-c999 px-margin-t10">如果觉得我帮助到了你，可以赞赏一根辣条钱～</p>-->
     </div>
+
+    <comment />
 
     <page-bottom class="px-margin-t50" :is-fixed="false" />
   </div>
@@ -49,6 +51,7 @@
 <script>
   import AV from 'leancloud-storage'
   import { mapState, mapActions } from 'vuex'
+  import Comment from 'v-comment'
   import { ago } from '../assets/date'
   import { handleGithub } from '../assets/util'
   const PageBottom = () => import('../components/PageBottom.vue')
@@ -74,7 +77,8 @@
 
     components: {
       ArticleContent,
-      PageBottom
+      PageBottom,
+      Comment
     },
 
     filters: {
@@ -166,7 +170,7 @@
   .markdown-body ol ol
   .markdown-body ul ol
     list-style-type lower-roman
-    ul 
+    ul
       list-style square
     ol
       list-style lower-alpha

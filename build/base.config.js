@@ -3,7 +3,6 @@ const path = require('path')
 const { VueLoaderPlugin } = require('vue-loader')
 const utils = require('./utils')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
-
 const isProd = process.env.NODE_ENV === 'production'
 
 module.exports = {
