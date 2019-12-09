@@ -42,7 +42,14 @@
       <!--<p class="color-c999 px-margin-t10">如果觉得我帮助到了你，可以赞赏一根辣条钱～</p>-->
     </div>
 
-    <comment />
+    <comment
+      v-if="showComment"
+      :list="comment || []"
+      :nums="comment ? comment.length : 0"
+      :user="commentUser"
+      @submit="submitComment"
+      @del="delComment"
+    />
 
     <page-bottom class="px-margin-t50" :is-fixed="false" />
   </div>
@@ -51,11 +58,11 @@
 <script>
   import AV from 'leancloud-storage'
   import { mapState, mapActions } from 'vuex'
-  import Comment from 'v-comment'
-  import { ago } from '../assets/date'
+  import { formatDate } from '../assets/date'
   import { handleGithub } from '../assets/util'
   const PageBottom = () => import('../components/PageBottom.vue')
   const ArticleContent = () => import('../components/ArticleContent.vue')
+  const Comment = () => import('v-comment')
 
   export default {
     name: 'Detail',
@@ -75,6 +82,14 @@
       }
     },
 
+    data () {
+      return {
+        showComment: false,
+        comment: null,
+        commentUser: null
+      }
+    },
+
     components: {
       ArticleContent,
       PageBottom,
@@ -82,13 +97,7 @@
     },
 
     filters: {
-      format(str) {
-        let res
-        Date.prototype.ago = ago
-        res = new Date().ago(str)
-        Date.prototype.ago = null
-        return res
-      }
+      format: formatDate
     },
 
     computed: {
@@ -100,8 +109,72 @@
       }
     },
 
+    mounted () {
+      if (!this.$isServer) {
+        this.showComment = true
+        let user = AV.User.current()
+        if (user) {
+          user = user.toJSON()
+          this.commentUser = {
+            id: user.objectId,
+            name: user.username,
+            avatar: user.github && user.github.avatar_url
+          }
+          console.log(this.commentUser)
+        }
+        // 获取评论
+        this.getCommentList()
+      }
+    },
+
     methods: {
       ...mapActions('article', ['ADD_ARTICLE']),
+
+      getCommentList () {
+        const articalId = this.$route.params.id
+        const query = new AV.Query('Comment')
+        query.equalTo('articalId', articalId)
+        query.greaterThanOrEqualTo('status', 0)
+        return query.find().then(res => res.map(x => x.toJSON())).then(data => {
+          this.comment = data.map(x => ({
+            ...x,
+            createdTimeStamp: formatDate(x.createdAt)
+          }))
+          return data
+        })
+      },
+
+      submitComment (input, inputCompiler) {
+        const comment = new AV.Object('Comment')
+        const user = AV.User.current()
+        if (!user) {
+          this.$message.error('未登录')
+          return
+        }
+        comment.set('input', input)
+        comment.set('inputCompiler', inputCompiler)
+        comment.set('articalId', this.$route.params.id)
+        comment.set('user', this.commentUser)
+        const loading = this.$loading()
+        return comment.save().then(() => {
+          loading.close()
+          this.$message.success('评论成功！')
+          this.getCommentList()
+        }).catch(() => {
+          this.$message.error('评论失败')
+          loading.close()
+        })
+      },
+
+      delComment (item) {
+        this.$box.confirm('确定要删除这条评论吗？').then(() => {
+          const comment = AV.Object.createWithoutData('Comment', item.objectId)
+          comment.set('status', -1)
+          return comment.save()
+        }).then(() => {
+          this.getCommentList()
+        })
+      },
 
       filterHtmlTag(str) {
         if (str) {
@@ -138,7 +211,6 @@
           return
         }
 
-        // const { exist, user } = this.hasTagged()
         const article = AV.Object.createWithoutData('Article', this.detail.id)
         article.increment('vantNum', exist ? -1 : 1)
         article[exist ? 'remove' : 'addUnique']('vantUser', user)
@@ -167,6 +239,8 @@
     border-radius: 3px
     position: relative
 
+  .markdown-body
+    width 100%
   .markdown-body ol ol
   .markdown-body ul ol
     list-style-type lower-roman

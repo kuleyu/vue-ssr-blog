@@ -22,6 +22,14 @@ export function format(time, format){
       format = format.replace(RegExp.$1, RegExp.$1.length==1 ? timeFormat[k] : ("00"+ timeFormat[k]).substr((""+ timeFormat[k]).length));
   return format;
 }
+
+export function formatDate(str) {
+  let res
+  Date.prototype.ago = ago
+  res = new Date().ago(str)
+  Date.prototype.ago = null
+  return res
+}
 /**
  * [ago 多少小时前、多少分钟前、多少秒前]
  * @return {[type]} [string]
