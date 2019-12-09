@@ -44,6 +44,7 @@
 
     <comment
       v-if="showComment"
+      ref="comment"
       :list="comment || []"
       :nums="comment ? comment.length : 0"
       :user="commentUser"
@@ -120,7 +121,6 @@
             name: user.username,
             avatar: user.github && user.github.avatar_url
           }
-          console.log(this.commentUser)
         }
         // 获取评论
         this.getCommentList()
@@ -159,6 +159,7 @@
         return comment.save().then(() => {
           loading.close()
           this.$message.success('评论成功！')
+          this.$refs.comment.resetEditor()
           this.getCommentList()
         }).catch(() => {
           this.$message.error('评论失败')
