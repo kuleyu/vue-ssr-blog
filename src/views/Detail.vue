@@ -50,6 +50,7 @@
       :user="commentUser"
       @submit="submitComment"
       @del="delComment"
+      @login="handleLogin"
     />
 
     <page-bottom class="px-margin-t50" :is-fixed="false" />
@@ -228,6 +229,10 @@
             this.detail.vantUser.push(user)
           }
         }
+      },
+
+      handleLogin() {
+        handleGithub.call(this)
       }
     }
   }
