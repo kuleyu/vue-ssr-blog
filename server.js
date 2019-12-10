@@ -142,6 +142,11 @@ app.get('/sitemap', (req, res) => {
   })
 })
 
+app.get('/cookie/clear', (req, res) => {
+  res.clearCookie('_login')
+  res.status(200).send()
+})
+
 app.get('/oauth/redirect', async (req, res) => {
   res.type('application/json')
 
@@ -170,7 +175,7 @@ app.get('/oauth/redirect', async (req, res) => {
     user.setEmail(email)
     user.set('github', userRes.data)
     const _redirect = () => {
-      res.cookie('_login', login, { expires: new Date(Date.now() + 60000), secure: true })
+      res.cookie('_login', login, { expires: new Date(Date.now() + 60000) })
       res.redirect(redirectUrl)
       redirectUrl = undefined
     }
