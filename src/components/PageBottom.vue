@@ -154,16 +154,15 @@
       ...mapGetters(['lastModifier'])
     },
 
-    async created() {
-      if (!this.$isServer) {
-        this.CURRENT_USER()
-
-        const loginName = document.cookie.match(/_login=([\w-_]+)&?/)
-        if (!this.currentUser && loginName && loginName[1]) {
-          // 根据用户名查询密码登录
-          handleLogin.call(this, loginName[1])
-        }
+    async mounted() {
+      // if (!this.$isServer) {
+      this.CURRENT_USER()
+      const loginName = document.cookie.match(/_login=([\w-_]+)&?/)
+      if (!this.currentUser && loginName && loginName[1]) {
+        // 根据用户名查询密码登录
+        handleLogin.call(this, loginName[1])
       }
+      // }
     },
 
     methods: {

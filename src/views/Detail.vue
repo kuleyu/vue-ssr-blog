@@ -112,8 +112,10 @@
     },
 
     mounted () {
-      if (!this.$isServer) {
-        this.showComment = true
+      // if (!this.$isServer) {
+      this.showComment = true
+      // todo 登录用户信息在全局不是一个状态
+      setTimeout(() => {
         let user = AV.User.current()
         if (user) {
           user = user.toJSON()
@@ -123,9 +125,10 @@
             avatar: user.github && user.github.avatar_url
           }
         }
-        // 获取评论
-        this.getCommentList()
-      }
+      }, 1000)
+      // 获取评论
+      this.getCommentList()
+      // }
     },
 
     methods: {
