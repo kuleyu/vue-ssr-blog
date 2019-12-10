@@ -121,8 +121,15 @@ function render(req, res) {
   })
 }
 
+// -------------------------------------------------------
+// Api for login and sitemap
+// -------------------------------------------------------
+const domain = 'https://iming.work'
+let redirectUrl = domain
 app.get('/github', async (req, res) => {
-  res.redirect('https://github.com/login/oauth/authorize?client_id=fd499caa8b7738da9ec4&redirect_uri=https://iming.work/oauth/redirect')
+  redirectUrl = decodeURIComponent(req.query.href)
+  console.log(redirectUrl)
+  res.redirect(`https://github.com/login/oauth/authorize?client_id=fd499caa8b7738da9ec4&redirect_uri=${domain}/oauth/redirect`)
 })
 
 app.get('/sitemap', (req, res) => {
@@ -156,24 +163,25 @@ app.get('/oauth/redirect', async (req, res) => {
         Authorization: `token ${access_token}`
       }
     })
-    const { login, node_id, email, avatar_url } = userRes.data
-    // 将 github 用户信息注册到数据库
+    const { login, node_id, email } = userRes.data
     const user = new AV.User()
     user.setUsername(login)
     user.setPassword(node_id)
     user.setEmail(email)
     user.set('github', userRes.data)
+    const _redirect = () => {
+      res.cookie('_login', login, { expires: new Date(Date.now() + 60000), secure: true })
+      res.redirect(redirectUrl)
+      redirectUrl = undefined
+    }
+
     try {
       await user.signUp()
-      // 登录
-      // const signRes = await AV.User.logIn(login, node_id)
-      // res.status(200).send({ success: true, data: signRes.toJSON() })
-      res.redirect(`https://iming.work/?login=${login}`)
+      _redirect()
     } catch (e) {
       if (e.code === 202) {
         // 已存在
-        // res.status(200).send({ success: true, data: { login, node_id, avatar_url } })
-        res.redirect(`https://iming.work/?login=${login}`)
+        _redirect()
       } else {
         res.status(500).send({ success: false, data: e })
       }

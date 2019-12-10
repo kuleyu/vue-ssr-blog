@@ -1,16 +1,7 @@
-// import axios from 'axios'
 import AV from 'leancloud-storage'
 
 export async function handleGithub() {
-  location.href = '/github'
-  // const loading = this.$loading({ text: '处理中...' })
-  // const { data: { success, data: { login, node_id } } } = await axios.get('/github')
-  // if (success) {
-  //   await AV.User.logIn(login, node_id)
-  //   this.CURRENT_USER()
-  //   this.$message.success('登录成功')
-  // }
-  // loading.close()
+  location.href = `/github?href=${encodeURIComponent(location.href)}`
 }
 
 export async function handleLogin(name) {
@@ -23,6 +14,7 @@ export async function handleLogin(name) {
       const user = res[0].toJSON()
       await AV.User.logIn(name, user.github.node_id)
       this.CURRENT_USER()
+      document.cookie = `_login=${name}; expires=${new Date('1970/01/01')};`
       this.$message.success('登录成功')
     }
   }

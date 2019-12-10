@@ -5,7 +5,7 @@ https.get('https://www.xml-sitemaps.com/index.php?op=crawlproc&initurl=https%3A/
   res.setEncoding('utf8')
   let result
   res.on('data', (d) => {
-    // console.log(d)
+    console.log(d)
     result = d
   })
 
