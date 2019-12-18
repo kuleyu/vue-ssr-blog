@@ -38,8 +38,8 @@
     </div>
 
     <div class="text-center px-margin-t50">
-      <img :src="require('../assets/vant.jpeg')" width="200px" alt="">
-      <!--<p class="color-c999 px-margin-t10">如果觉得我帮助到了你，可以赞赏一根辣条钱～</p>-->
+      <img :src="require('../assets/gzh.jpg')" width="200px" alt="">
+      <p class="px-margin-tb20">关注公众号，查看更多深度内容</p>
     </div>
 
     <comment
