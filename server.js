@@ -156,7 +156,7 @@ app.get('/robots.txt', function (req, res, next) {
     if (err) {
       next(err)
     } else {
-      console.log('Sent:', fileName)
+      console.log('Sent: robots.txt')
     }
   })
 })
