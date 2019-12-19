@@ -142,6 +142,25 @@ app.get('/sitemap', (req, res) => {
   })
 })
 
+app.get('/robots.txt', function (req, res, next) {
+  var options = {
+    root: path.join(__dirname),
+    dotfiles: 'deny',
+    headers: {
+      'x-timestamp': Date.now(),
+      'x-sent': true
+    }
+  }
+  // var fileName = req.params.name
+  res.sendFile('robots.txt', options, function (err) {
+    if (err) {
+      next(err)
+    } else {
+      console.log('Sent:', fileName)
+    }
+  })
+})
+
 app.get('/cookie/clear', (req, res) => {
   res.clearCookie('_login')
   res.status(200).send()
