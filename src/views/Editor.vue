@@ -200,6 +200,7 @@
           inputCompiled: this.compileValue,
           title: this.title,
           tag: this.tag,
+          type: this.type,
           isOuterLink: this.isOuterLink
         }
       },
@@ -214,6 +215,7 @@
         this.title = title
         this.tag = tag
         this.input = input
+        this.type = type
         this.isOuterLink = isOuterLink
       },
 
