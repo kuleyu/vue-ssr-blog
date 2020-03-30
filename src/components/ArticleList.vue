@@ -1,7 +1,7 @@
 <template>
   <ul v-if="isIndex">
     <li
-      v-for="(item, i) in list.slice(0, 3)"
+      v-for="(item, i) in list"
       :key="i"
     >
       <a

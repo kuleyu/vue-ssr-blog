@@ -33,7 +33,12 @@
       <div class="editor__tools--wrap">
         <div class="editor__tools">
           <div class="editor__tools-left px-padding-l15">
-            <el-checkbox v-model="isOuterLink">外链</el-checkbox>
+            <span class="color-c999">类型: </span>
+            <el-select v-model="type" size="mini">
+              <el-option name="文章" value="blog" />
+              <el-option name="RecordDays" value="record-days" />
+            </el-select>
+            <el-checkbox v-if="false" v-model="isOuterLink">外链</el-checkbox>
           </div>
           <div class="px-height-40 text-right font-0">
             <div
@@ -73,7 +78,7 @@
 <script>
   import marked from 'marked'
   import { debounce } from 'underscore'
-  import { Button, Checkbox } from 'element-ui'
+  import { Button, Checkbox, Select, Option } from 'element-ui'
   import { mapActions, mapState } from 'vuex'
   import { uploadImg } from '../api'
   import hljs from 'highlight.js'
@@ -91,7 +96,9 @@
     components: {
       ElButton: Button,
       ArticleContent,
-      ElCheckbox: Checkbox
+      ElCheckbox: Checkbox,
+      ElSelect: Select,
+      ElOption: Option
     },
 
     computed: {
@@ -118,6 +125,7 @@
         input: '',
         title: '',
         tag: '',
+        type: 'blog',
         isOuterLink: false,
         editorTools: [
           { icon: 'code', id: 1 },

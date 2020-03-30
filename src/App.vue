@@ -44,4 +44,23 @@
   @media (max-width 700px)
     .w700
       width: 90%;
+
+  .link-a
+    position relative
+    color: #333
+    &:hover
+      color #333
+    &:after
+      content: ""
+      position: absolute
+      z-index: -1
+      top: 60%
+      left: -0.1em
+      right: -0.1em
+      bottom: 0
+      transition: top 200ms cubic-bezier(0, .8, .13, 1)
+      // background-color: rgba(79,192,141,0.5)
+      background: linear-gradient(transparent, #47e1a6)
+    &:hover:after
+      top 0
 </style>

@@ -40,9 +40,16 @@
       return store.dispatch('article/FETCH_LIST', {
         limit: pageSize,
         skip: (route.params.currentPage - 1) * pageSize,
-        field: ['title', 'tag', 'isOuterLink'],
+        field: ['title', 'tag', 'isOuterLink', 'type'],
         mutations: 'SET_LIST_PAGE',
-        cacheKey: route.params.currentPage
+        cacheKey: route.params.currentPage,
+        condition: [
+          {
+            field: 'type',
+            value: 'record-days',
+            reverse: true
+          }
+        ]
       })
     },
 

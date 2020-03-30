@@ -36,6 +36,10 @@ export function createRouter() {
       {
         path: '/one-word',
         component: () => import('../views/OneWord.vue')
+      },
+      {
+        path: '/record-days',
+        component: () => import('../views/RecordDays.vue')
       }
     ]
   })

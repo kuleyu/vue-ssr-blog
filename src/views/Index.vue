@@ -2,7 +2,7 @@
   <div class="index__wrap">
     <div class="px-padding-t70 px-margin-b50">
       <h1 class="index__name"><a href="#" style="color: #333">Jmingzi</a></h1>
-      <p class="color-c999 px-margin-t10">AD & 打野</p>
+      <p class="color-c999 px-margin-t10">国服最强 AD</p>
     </div>
     <div class="index__list">
       <div
@@ -37,8 +37,6 @@
 
   const ArticleList = () => import('../components/ArticleList.vue')
   const PageBottom = () => import('../components/PageBottom.vue')
-  // import ArticleList from '../components/ArticleList.vue'
-  // import PageBottom from '../components/PageBottom.vue'
 
   export default {
     name: 'Index',
@@ -53,7 +51,17 @@
     },
 
     asyncData({ store }) {
-      return store.dispatch('article/FETCH_LIST', { limit: 5, field: ['title', 'tag', 'isOuterLink', 'inputCompiled'] })
+      return store.dispatch('article/FETCH_LIST', {
+        limit: 5,
+        field: ['title', 'tag', 'isOuterLink', 'type', 'inputCompiled'],
+        condition: [
+          {
+            field: 'type',
+            value: 'record-days',
+            reverse: true
+          }
+        ]
+      })
     },
 
     components: {
@@ -92,22 +100,6 @@
 
     .px-bottom-0
       bottom 30px
-    .link-a
-      position relative
-      color: #333
-      &:after
-        content: ""
-        position: absolute
-        z-index: -1
-        top: 60%
-        left: -0.1em
-        right: -0.1em
-        bottom: 0
-        transition: top 200ms cubic-bezier(0, .8, .13, 1)
-        // background-color: rgba(79,192,141,0.5)
-        background: linear-gradient(transparent, #47e1a6)
-      &:hover:after
-        top 0
 
   .index__name
     font-weight: bold

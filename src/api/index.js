@@ -35,8 +35,8 @@ export function fetch(key, condition, payload, field) {
         instance.select(field)
       }
       if (condition) {
-        Object.keys(condition).forEach(key => {
-          instance.equalTo(key, condition[key])
+        condition.forEach(it => {
+          instance[it.reverse ? 'notEqualTo' : 'equalTo'](it.field, it.value)
         })
       }
       instance.descending('createdAt') // updatedAt

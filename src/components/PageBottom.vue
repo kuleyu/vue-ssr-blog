@@ -11,10 +11,18 @@
       <li
         v-for="item in menu"
         :key="item.id"
-        class="ib-middle px-font-14 px-width-50"
+        class="ib-middle px-font-14"
+        style="margin-right: 20px"
       >
+        <a 
+          v-if="item.url" 
+          :href="`javascript:window.open('${item.url}');`"
+        >
+          {{ item.name }}
+        </a>
         <router-link
-          class="link-a"
+          v-else
+          class=""
           :to="item.path"
         >
           {{ item.name }}
@@ -22,18 +30,18 @@
       </li>
       <template v-if="currentUser">
         <li v-if="hasWrite()" class="ib-middle px-font-14 px-width-50">
-          <router-link class="link-a" to="/editor">
+          <router-link class="" to="/editor">
             <span class="ib-middle">写文章</span>
           </router-link>
         </li>
         <li class="ib-middle px-font-14 px-width-50">
-          <a href="javascript:" class="link-a px-margin-l10" @click="logOut">
+          <a href="javascript:" class="px-margin-l10" @click="logOut">
             <span class="ib-middle">注销</span>
           </a>
         </li>
       </template>
       <li v-else class="ib-middle px-font-14">
-        <a class="link-a" href="javascript:" @click="handleGithub">Github 登录</a>
+        <a class="" href="javascript:" @click="handleGithub">Github 登录</a>
       </li>
       <template v-if="false">
         <li class="ib-middle px-font-14 px-width-50">
@@ -120,24 +128,24 @@
         menu: [
           {
             id: 1,
-            name: '首页',
+            name: '博客',
             path: '/'
           },
           {
             id: 2,
-            name: '一句',
-            path: '/one-word'
+            name: 'Miss清单',
+            url: 'http://pro.iming.work'
           },
           {
             id: 3,
-            name: '文章',
-            path: '/article/1'
-          },
-          {
-            id: 4,
-            name: '关于',
-            path: '/about'
+            name: 'RecordDays',
+            path: '/record-days'
           }
+          // {
+          //   id: 4,
+          //   name: '关于',
+          //   path: '/about'
+          // }
         ]
       }
     },

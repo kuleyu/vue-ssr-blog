@@ -13,8 +13,8 @@ export default {
   },
 
   actions: {
-    FETCH_LIST({ commit }, { limit, skip, field, mutations, cacheKey }) {
-      return fetch('Article', null, { limit, skip, cacheKey }, field).then(res => {
+    FETCH_LIST({ commit }, { limit, skip, field, mutations, cacheKey, condition }) {
+      return fetch('Article', condition, { limit, skip, cacheKey }, field).then(res => {
         if (!mutations) {
           mutations = 'SET_LIST'
         }

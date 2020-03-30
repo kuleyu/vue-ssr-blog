@@ -3,10 +3,15 @@
     <div class="detail__head px-padding-t30">
       <h1>{{ detail.title || '标题' }}</h1>
       <p class="px-margin-tb10" v-if="tag">
-        <span class="topic-tag" v-for="item in tag">{{ item }}</span>
+        <span class="topic-tag" v-if="/http:/.test(detail.tag)">record-days</span>
+        <span v-else class="topic-tag" v-for="item in tag" :key="item">{{ item }}</span>
       </p>
     </div>
     <div class="detail__content">
+      <div v-if="codeUrl" class="detail__content--qrcode">
+        <vue-qrcode :value="codeUrl" tag="img" :options="{ width: 150 }"/>
+        <p>扫一扫，分享给别人</p>
+      </div>
       <div class="detail__content-head">
         <span
           class="fr cursor-p"
@@ -62,6 +67,7 @@
   import { mapState, mapActions } from 'vuex'
   import { formatDate } from '../assets/date'
   import { handleGithub } from '../assets/util'
+  import VueQrcode from '@chenfengyuan/vue-qrcode'
   const PageBottom = () => import('../components/PageBottom.vue')
   const ArticleContent = () => import('../components/ArticleContent.vue')
   const Comment = () => import('v-comment')
@@ -78,8 +84,11 @@
       return {
         title: detail.title || '文章详情',
         meta: [
-          { vmid: 'keywords', name: 'keywords', content: 'jmingzi，前端博客，' + detail.tag },
-          { vmid: 'description', name: 'description', content: this.filterHtmlTag(detail.inputCompiled).substr(0, 150) }
+          { vmid: 'keywords', name: 'keywords', content: 'jmingzi，前端博客，' + (/http:/.test(detail.tag) ? 'RecordDays' : detail.tag) },
+          { vmid: 'description', name: 'description', content: this.filterHtmlTag(detail.inputCompiled).substr(0, 150) },
+          { name: 'share_title', content: detail.title },
+          { name: 'share_content', content: this.filterHtmlTag(detail.inputCompiled).substr(0, 150) },
+          { name: 'share_image', content: /http:/.test(detail.tag) ? detail.tag : detail.img }
         ]
       }
     },
@@ -88,14 +97,16 @@
       return {
         showComment: false,
         comment: null,
-        commentUser: null
+        commentUser: null,
+        codeUrl: null
       }
     },
 
     components: {
       ArticleContent,
       PageBottom,
-      Comment
+      Comment,
+      VueQrcode
     },
 
     filters: {
@@ -112,6 +123,9 @@
     },
 
     mounted () {
+      if (!/iphone|android/i.test(navigator.userAgent)) {
+        this.codeUrl = location.href
+      }
       // if (!this.$isServer) {
       this.showComment = true
       // todo 登录用户信息在全局不是一个状态
@@ -247,6 +261,17 @@
     border: 1px solid #c0d3eb
     border-radius: 3px
     position: relative
+    &--qrcode
+      float right
+      position sticky
+      // right -170px
+      top 10px
+      margin-right -160px
+      border 1px #eee solid
+      p
+        font-size 12px
+        text-align center
+        padding-bottom 10px
 
   .markdown-body
     width 100%
