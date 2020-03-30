@@ -42,7 +42,7 @@
       </div>
     </div>
 
-    <div class="text-center px-margin-t50">
+    <div v-if="false" class="text-center px-margin-t50">
       <img :src="require('../assets/gzh.jpg')" width="200px" alt="">
       <p class="px-margin-tb20">关注公众号，查看更多深度内容</p>
     </div>
