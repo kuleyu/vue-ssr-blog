@@ -17,7 +17,7 @@
           </div>
           <div class="record-days__item--con">
             <p class="record-days__item--title">
-              <a href="" class="link-a">{{ item.title }}</a>
+              <a href="javascript:;" class="link-a">{{ item.title }}</a>
               <span>{{ item.createdAt | format }}</span>
             </p>
             <p class="record-days__item--desc">{{ item.inputCompiled | summary }}</p>
