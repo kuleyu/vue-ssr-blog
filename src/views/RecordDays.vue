@@ -119,10 +119,10 @@
 
 <style lang="stylus">
 .record-days
-  @media (max-height: 670px) {
-    .page-bottom
+  .page-bottom
+    @media (max-height: 670px) {
       padding-top 10px
-  }
+    }
 
   &__top
     line-height 50px
