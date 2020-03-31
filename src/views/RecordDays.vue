@@ -119,6 +119,11 @@
 
 <style lang="stylus">
 .record-days
+  @media (max-height: 670px) {
+    .page-bottom
+      padding-top 10px
+  }
+
   &__top
     line-height 50px
     height 50px
@@ -137,9 +142,15 @@
     overflow auto
     padding 0 50px
     background #f2f2f2
+    @media only screen and (max-width: 600px) {
+      padding 0
+    }
   &__area
     width 800px
     margin 0 auto
+    @media only screen and (max-width: 600px) {
+      width 100%
+    }
   &__item
     display flex
     padding 10px 15px
