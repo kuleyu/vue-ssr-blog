@@ -14,9 +14,10 @@
         class="ib-middle px-font-14"
         style="margin-right: 20px"
       >
-        <a 
-          v-if="item.url" 
-          :href="`javascript:window.open('${item.url}');`"
+        <a
+          v-if="item.url"
+          :href="item.url"
+          target="_blank"
         >
           {{ item.name }}
         </a>
