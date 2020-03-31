@@ -180,7 +180,7 @@
         // validator
         const data = this.getValue()
 
-        if (!data.tag) {
+        if (!data.tag && data.type === 'blog') {
           this.$message.error('请输入标签')
           return
         }

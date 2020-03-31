@@ -11,5 +11,5 @@ echo 'npm run build ...'
 npm run build
 
 echo 'npm restart ...'
-pm2 restart start
-pm2 restart build
+pm2 restart blog
+pm2 restart blog-hooks
