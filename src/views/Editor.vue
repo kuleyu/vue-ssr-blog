@@ -211,7 +211,7 @@
       },
 
       fillDetail(data) {
-        const { title, tag, input, isOuterLink } = data
+        const { title, tag, input, isOuterLink, type } = data
         this.title = title
         this.tag = tag
         this.input = input
