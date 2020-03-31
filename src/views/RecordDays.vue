@@ -21,6 +21,15 @@
               <span>{{ item.createdAt | format }}</span>
             </p>
             <p class="record-days__item--desc">{{ item.inputCompiled | summary }}</p>
+            <p>
+              <span
+                v-if="currentUser"
+                class="color-error ib-middle px-margin-t10 cursor-p"
+                @click.stop="del(item, i)"
+              >
+                删除
+              </span>
+            </p>
           </div>
         </div>
       </div>
@@ -32,7 +41,7 @@
 </template>
 
 <script>
-  import { mapState, mapMutations } from 'vuex'
+  import {mapState, mapMutations, mapActions} from 'vuex'
   import { ago } from "../assets/date"
   import { summary } from "../assets/util"
   const PageBottom = () => import('../components/PageBottom.vue')
@@ -85,7 +94,8 @@
     },
 
     computed: {
-      ...mapState('article', ['list'])
+      ...mapState('article', ['list']),
+      ...mapState(['currentUser'])
     },
 
     created() {
@@ -96,7 +106,13 @@
     },
 
     methods: {
-      ...mapMutations('article', ['SET_DETAIL'])
+      ...mapMutations('article', ['SET_DETAIL']),
+      ...mapActions('article', ['DEL_ARTICLE']),
+      del(item, i) {
+        this.$box.confirm('确认要删除吗？')
+          .then(() => this.DEL_ARTICLE({ id: item.id, index: i }))
+          .then(() => { this.$message.success('删除成功') })
+      }
     }
   }
 </script>

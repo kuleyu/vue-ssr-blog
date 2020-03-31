@@ -26,7 +26,7 @@
         v-model="tag"
         class="editor__tag px-line-30 px-font-16 px-margin-l10 ib-middle"
         type="text"
-        placeholder="请输入标签，顿号分隔"
+        :placeholder="this.type === 'blog' ? `请输入标签，中文顿号分隔` : '输入图片地址'"
       >
     </div>
     <div class="editor__wrapper-container position-a px-top-60 bottom-0 left-0 width-50">
