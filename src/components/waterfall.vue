@@ -20,7 +20,7 @@
             <a href="javascript:;">查看详情</a>
             <span
               v-if="currentUser"
-              class="color-error ib-middle px-margin-t10 cursor-p"
+              class="color-error cursor-p"
               @click.stop="$emit('del', item, i)"
             >
               删除
@@ -163,7 +163,10 @@ export default {
       margin: 5px 0;
     }
     &-opt {
+      display: flex;
+      align-items: center;
       font-size: 12px;
+      justify-content: space-between;
     }
   }
 }
