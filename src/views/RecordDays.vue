@@ -5,34 +5,11 @@
       <span class="record-days__slogan">记录一瞬间的想法</span>
     </div>
     <div class="record-days__content">
-      <div class="record-days__area">
-        <div
-          v-for="(item, i) in list"
-          :key="i + item.id"
-          class="record-days__item"
-          @click="$router.push(`/detail/${item.id}`)"
-        >
-          <div v-if="/http:/.test(item.tag)" class="record-days__item--img">
-            <img :src="item.tag" alt="" width="100px">
-          </div>
-          <div class="record-days__item--con">
-            <p class="record-days__item--title">
-              <a href="javascript:;" class="link-a">{{ item.title }}</a>
-              <span>{{ item.createdAt | format }}</span>
-            </p>
-            <p class="record-days__item--desc">{{ item.inputCompiled | summary }}</p>
-            <p>
-              <span
-                v-if="currentUser"
-                class="color-error ib-middle px-margin-t10 cursor-p"
-                @click.stop="del(item, i)"
-              >
-                删除
-              </span>
-            </p>
-          </div>
-        </div>
-      </div>
+      <water
+        :items="list"
+        :currentUser="currentUser"
+        @del="del"
+      />
     </div>
     <page-bottom
       :is-fixed="false"
@@ -42,23 +19,11 @@
 
 <script>
   import {mapState, mapMutations, mapActions} from 'vuex'
-  import { ago } from "../assets/date"
-  import { summary } from "../assets/util"
+  import water from '../components/waterfall.vue'
   const PageBottom = () => import('../components/PageBottom.vue')
 
   export default {
     name: 'Index',
-
-    filters: {
-      format(str) {
-        let res
-        Date.prototype.ago = ago
-        res = new Date().ago(str)
-        Date.prototype.ago = null
-        return res
-      },
-      summary
-    },
 
     metaInfo: {
       title: 'RecordDays',
@@ -84,7 +49,8 @@
     },
 
     components: {
-      PageBottom
+      PageBottom,
+      water
     },
 
     data() {
@@ -140,7 +106,7 @@
     height calc(100% - 150px)
     margin-bottom 20px
     overflow auto
-    padding 0 50px
+    // padding 0 50px
     background #f2f2f2
     @media only screen and (max-width: 600px) {
       padding 0
