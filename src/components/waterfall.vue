@@ -107,8 +107,10 @@ export default {
       const width = this.docWidth
       if (width < 600) {
         this.column = 1
-      } else if (width < 1400) {
+      } else if (width < 1000) {
         this.column = 4
+      } else if (width < 1400) {
+        this.column = 5
       } else {
         this.column = 7
       }
