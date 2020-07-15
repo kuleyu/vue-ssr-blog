@@ -187,12 +187,12 @@ app.get('/cookie/clear', (req, res) => {
 
 app.get('/weather', async (req, res) => {
   // const city = req.query.city
-  const result = await axios({
+  const { data: { result } } = await axios({
     url: 'http://api.k780.com:88/?app=weather.future&weaid=94&appkey=10003&sign=b59bc3ef6191eb9f747dd4e83c99f2a4&format=json'
   }).catch(err => {
     res.status(500).send(err)
   })
-  res.status(200).send({ ...result, success: true })
+  res.status(200).send({ data: result, success: true })
 })
 
 app.get('/oauth/redirect', async (req, res) => {
